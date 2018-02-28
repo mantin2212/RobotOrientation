@@ -8,6 +8,7 @@ public class Utils {
 	public static RealMatrix getTransformationMatrix(double yaw, double roll, double pitch) {
 		RealMatrix result = new Array2DRowRealMatrix(3, 3);
 
+		// defining variables for the sine and cosine results of the angles
 		double cosRoll = Math.cos(roll);
 		double cosYaw = Math.cos(yaw);
 		double cosPitch = Math.cos(pitch);
@@ -16,6 +17,7 @@ public class Utils {
 		double sinYaw = Math.sin(yaw);
 		double sinPitch = Math.sin(pitch);
 
+		// calculating each value of the matrix
 		result.setEntry(0, 0, cosYaw * cosPitch);
 		result.setEntry(0, 1, cosYaw * sinPitch * sinRoll - cosYaw * sinRoll);
 		result.setEntry(0, 2, cosYaw * sinPitch * cosRoll + sinYaw * sinRoll);
@@ -27,6 +29,15 @@ public class Utils {
 		result.setEntry(2, 0, -sinPitch);
 		result.setEntry(2, 1, cosPitch * sinRoll);
 		result.setEntry(2, 2, cosPitch * cosRoll);
+
+		return result;
+	}
+
+	public RealMatrix getUnitMatrix(int size) {
+		RealMatrix result = new Array2DRowRealMatrix(size, size);
+
+		for (int i = 0; i < result.getRowDimension(); i++)
+			result.setEntry(i, i, 1);
 
 		return result;
 	}
