@@ -3,18 +3,15 @@ package kalmanFilter.errorHandler;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
-public class ConstantsErrorHandler {
+public class ConstantErrorsHandler {
 
-	private RealVector expected;
 	private RealVector resultSum;
 
 	private int measurementNumber = 0;
 
-	public ConstantsErrorHandler(int size, RealVector expectedVector) {
-		this.expected = expectedVector;
+	public ConstantErrorsHandler(int size) {
 
 		this.resultSum = new ArrayRealVector(size);
-
 		resultSum.subtract(resultSum);
 	}
 
@@ -23,10 +20,9 @@ public class ConstantsErrorHandler {
 		measurementNumber++;
 	}
 
-	public RealVector getErrorVector() {
-		RealVector errorSum = resultSum.subtract(expected.mapMultiplyToSelf(measurementNumber));
+	public RealVector getErrorVector(RealVector expected) {
 
-		RealVector errorAvg = errorSum.mapDivide(measurementNumber);
+		RealVector errorAvg = resultSum.mapDivide(measurementNumber).subtract(expected);
 
 		return errorAvg;
 	}

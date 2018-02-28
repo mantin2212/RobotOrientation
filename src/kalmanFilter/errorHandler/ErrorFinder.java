@@ -5,27 +5,24 @@ import org.apache.commons.math3.linear.RealVector;
 
 public class ErrorFinder {
 
-	private ConstantsErrorHandler constantsErrorFixer;
+	private ConstantErrorsHandler constantErrorsHandler;
+	private CovarianceMatrixHandler covarianceMatrixFinder;
 
-	private CovarianceMatrixHandler handler;
-
-	public ErrorFinder(int size, RealVector expectedVector) {
-
-		constantsErrorFixer = new ConstantsErrorHandler(size, expectedVector);
-
-		handler = new CovarianceMatrixHandler(size);
+	public ErrorFinder(int size) {
+		constantErrorsHandler = new ConstantErrorsHandler(size);
+		covarianceMatrixFinder = new CovarianceMatrixHandler(size);
 	}
 
 	public void addMeasurement(RealVector measurement) {
-		constantsErrorFixer.addMeasurement(measurement);
-		handler.addMeasurement(measurement);
+		constantErrorsHandler.addMeasurement(measurement);
+		covarianceMatrixFinder.addMeasurement(measurement);
 	}
 
-	public RealVector getErrorVector() {
-		return constantsErrorFixer.getErrorVector();
+	public RealVector getErrorVector(RealVector expectedVector) {
+		return constantErrorsHandler.getErrorVector(expectedVector);
 	}
 
-	public RealMatrix getCovarianceMatrix() {
-		return handler.getCovarianceMatrix(getErrorVector());
+	public RealMatrix getCovarianceMatrix(RealVector expectedVector) {
+		return covarianceMatrixFinder.getCovarianceMatrix(getErrorVector(expectedVector));
 	}
 }
