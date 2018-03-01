@@ -33,7 +33,7 @@ public class Utils {
 		return result;
 	}
 
-	public RealMatrix getUnitMatrix(int size) {
+	public static RealMatrix getUnitMatrix(int size) {
 		RealMatrix result = new Array2DRowRealMatrix(size, size);
 
 		for (int i = 0; i < result.getRowDimension(); i++)

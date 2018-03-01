@@ -22,7 +22,21 @@ public class RobotOrientation {
 		return position;
 	}
 
-	public void update(RealVector measurement, RealVector controlChanges) {
+	public void update(RealVector measurement, RealVector controlChanges, double yawAngle) {
+		double dt = controller.getDT();
+
+		movementFilter.predict(controlChanges);
+		movementFilter.correct(measurement);
+
+		RealVector state = movementFilter.getStateEstimationVector();
+
+		double velocityXb = state.getEntry(0);
+		double velocityYb = state.getEntry(1);
+
+		double velocityXn = velocityXb * Math.cos(yawAngle) + velocityYb * Math.sin(yawAngle);
+		double velocityYn = velocityXb * Math.sin(yawAngle) - velocityYb * Math.cos(yawAngle);
+
+		position.move(velocityXn * dt, velocityYn * dt);
 	}
 
 }
