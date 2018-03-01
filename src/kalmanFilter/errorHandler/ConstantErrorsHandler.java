@@ -10,9 +10,7 @@ public class ConstantErrorsHandler {
 	private int measurementNumber = 0;
 
 	public ConstantErrorsHandler(int size) {
-
 		this.resultSum = new ArrayRealVector(size);
-		resultSum.subtract(resultSum);
 	}
 
 	public void addMeasurement(RealVector measurement) {
