@@ -1,9 +1,16 @@
 package kalmanFilter;
 
+import org.apache.commons.math3.filter.DefaultMeasurementModel;
+import org.apache.commons.math3.filter.DefaultProcessModel;
 import org.apache.commons.math3.filter.KalmanFilter;
+import org.apache.commons.math3.filter.MeasurementModel;
+import org.apache.commons.math3.filter.ProcessModel;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import routes.ArgPoint;
+import utils.OrientationConstants;
 
 public class RobotOrientation {
 
@@ -12,8 +19,20 @@ public class RobotOrientation {
 
 	private TimeController controller;
 
-	public RobotOrientation(ArgPoint initialPosition, TimeController controller) {
+	public RobotOrientation(ArgPoint initialPosition, TimeController controller, RealMatrix processNoise,
+			RealMatrix measurementNoise) {
+
 		this.position = initialPosition;
+
+		RealVector initial = new ArrayRealVector(new Double[] { 0.0, 0.0 });
+
+		ProcessModel processModel = new DefaultProcessModel(OrientationConstants.KalmanFilterMatrices.aMatrix,
+				OrientationConstants.KalmanFilterMatrices.bMatrix, processNoise, initial, null);
+
+		MeasurementModel measurementModel = new DefaultMeasurementModel(
+				OrientationConstants.KalmanFilterMatrices.hMatrix, measurementNoise);
+
+		movementFilter = new KalmanFilter(processModel, measurementModel);
 
 		this.controller = controller;
 	}
@@ -23,6 +42,7 @@ public class RobotOrientation {
 	}
 
 	public void update(RealVector measurement, RealVector controlChanges, double yawAngle) {
+
 		double dt = controller.getDT();
 
 		movementFilter.predict(controlChanges);
@@ -38,5 +58,4 @@ public class RobotOrientation {
 
 		position.move(velocityXn * dt, velocityYn * dt);
 	}
-
 }
