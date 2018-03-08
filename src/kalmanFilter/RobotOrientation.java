@@ -9,39 +9,41 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import routes.ArgPoint;
 import utils.OrientationConstants;
+import utils.Point3D;
+import utils.Utils;
 
 public class RobotOrientation {
 
 	private KalmanFilter movementFilter;
-	private ArgPoint position;
+	private Point3D position;
 
 	private TimeController controller;
 
-	public RobotOrientation(ArgPoint initialPosition, TimeController controller, RealMatrix processNoise,
+	public RobotOrientation(Point3D initialPosition, TimeController controller, RealMatrix processNoise,
 			RealMatrix measurementNoise) {
 
 		this.position = initialPosition;
 
-		RealVector initial = new ArrayRealVector(new Double[] { 0.0, 0.0 });
+		RealVector initial = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
 
-		ProcessModel processModel = new DefaultProcessModel(OrientationConstants.KalmanFilterMatrices.aMatrix,
-				OrientationConstants.KalmanFilterMatrices.bMatrix, processNoise, initial, null);
+		ProcessModel processModel = new DefaultProcessModel(OrientationConstants.KalmanFilterMatrices.A_MATRIX,
+				OrientationConstants.KalmanFilterMatrices.B_MATRIX, processNoise, initial, null);
 
 		MeasurementModel measurementModel = new DefaultMeasurementModel(
-				OrientationConstants.KalmanFilterMatrices.hMatrix, measurementNoise);
+				OrientationConstants.KalmanFilterMatrices.H_MATRIX, measurementNoise);
 
 		movementFilter = new KalmanFilter(processModel, measurementModel);
 
 		this.controller = controller;
 	}
 
-	public ArgPoint getPosition() {
+	public Point3D getPosition() {
 		return position;
 	}
 
-	public void update(RealVector measurement, RealVector controlChanges, double yawAngle) {
+	public void update(RealVector measurement, RealVector controlChanges, double yawAngle, double rollAngle,
+			double pitchAngle) {
 
 		double dt = controller.getDT();
 
@@ -50,12 +52,14 @@ public class RobotOrientation {
 
 		RealVector state = movementFilter.getStateEstimationVector();
 
-		double velocityXb = state.getEntry(0);
-		double velocityYb = state.getEntry(1);
+		RealMatrix transformationMatrix = Utils.getTransformationMatrix(yawAngle, rollAngle, pitchAngle);
 
-		double velocityXn = velocityXb * Math.cos(yawAngle) + velocityYb * Math.sin(yawAngle);
-		double velocityYn = velocityXb * Math.sin(yawAngle) - velocityYb * Math.cos(yawAngle);
+		state = transformationMatrix.preMultiply(state);
 
-		position.move(velocityXn * dt, velocityYn * dt);
+		double velocityX = state.getEntry(0);
+		double velocityY = state.getEntry(1);
+		double velocityZ = state.getEntry(2);
+
+		position.move(dt * velocityX, dt * velocityY, dt * velocityZ);
 	}
 }
