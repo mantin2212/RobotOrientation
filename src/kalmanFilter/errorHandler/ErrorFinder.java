@@ -5,11 +5,11 @@ import org.apache.commons.math3.linear.RealVector;
 
 public class ErrorFinder {
 
-	private ConstantErrorsFinder constantErrorsHandler;
+	private BiasFinder constantErrorsHandler;
 	private CovarianceMatrixHandler covarianceMatrixFinder;
 
 	public ErrorFinder(int size) {
-		constantErrorsHandler = new ConstantErrorsFinder(size);
+		constantErrorsHandler = new BiasFinder(size);
 		covarianceMatrixFinder = new CovarianceMatrixHandler(size);
 	}
 

@@ -4,12 +4,12 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
 /**
- * this class is meant to find the constant errors of a set of devices, usually
- * sensors, by analyzing their measurements in a constant state.
+ * this class is meant to find the bias (average error) of a set of devices,
+ * usually sensors, by analyzing their measurements in a static state.
  * 
  * @author noam mantin
  */
-public class ConstantErrorsFinder {
+public class BiasFinder {
 
 	// the sum of the measurement vectors
 	private RealVector resultSum;
@@ -18,13 +18,12 @@ public class ConstantErrorsFinder {
 	private int measurementNumber = 0;
 
 	/**
-	 * creates a new {@link ConstantErrorsFinder} object, with a default result sum
-	 * (0 vector)
+	 * creates a new {@link BiasFinder} object, with a default result sum (0 vector)
 	 * 
-	 * @param size
+	 * @param measurementVectorSize
 	 */
-	public ConstantErrorsFinder(int size) {
-		this.resultSum = new ArrayRealVector(size);
+	public BiasFinder(int measurementVectorSize) {
+		this.resultSum = new ArrayRealVector(measurementVectorSize);
 	}
 
 	/**
@@ -34,10 +33,13 @@ public class ConstantErrorsFinder {
 	 *            the measured vector
 	 */
 	public void addMeasurement(RealVector measurement) {
-		// adding the new measurement
-		resultSum.add(measurement);
-		// updating the measurement number
-		measurementNumber++;
+		if (measurement.getDimension() == resultSum.getDimension()) {
+			// adding the new measurement
+			resultSum.add(measurement);
+			// updating the measurement number
+			measurementNumber++;
+		} else
+			throw new IllegalArgumentException("illegal measurement vector size");
 	}
 
 	/**
@@ -50,7 +52,11 @@ public class ConstantErrorsFinder {
 	 *         vector
 	 */
 	public RealVector getErrorVector(RealVector expected) {
-
+		/*
+		 * calculating the average bias using: bias = Sm/n-e, when: Sm- the sum of the
+		 * measurements, n- the number of measurements, and e- the expected state the
+		 * sensors should measure
+		 */
 		RealVector errorAvg = resultSum.mapDivide(measurementNumber).subtract(expected);
 
 		return errorAvg;
