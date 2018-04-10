@@ -3,26 +3,28 @@ package kalmanFilter.errorHandler;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
+import utils.VarianceFinder;
+
 public class ErrorFinder {
 
-	private BiasFinder constantErrorsHandler;
-	private CovarianceMatrixHandler covarianceMatrixFinder;
+	private BiasFinder biasFinder;
+	private VarianceFinder varianceFinder;
 
 	public ErrorFinder(int size) {
-		constantErrorsHandler = new BiasFinder(size);
-		covarianceMatrixFinder = new CovarianceMatrixHandler(size);
+		biasFinder = new BiasFinder(size);
+		varianceFinder = new VarianceFinder(size);
 	}
 
-	public void addMeasurement(RealVector measurement) {
-		constantErrorsHandler.addMeasurement(measurement);
-		covarianceMatrixFinder.addMeasurement(measurement);
+	public void addMeasurement(double... measurement) {
+		biasFinder.addMeasurement(measurement);
+		varianceFinder.addResultVector(measurement);
 	}
 
 	public RealVector getErrorVector(RealVector expectedVector) {
-		return constantErrorsHandler.getErrorVector(expectedVector);
+		return biasFinder.getErrorVector(expectedVector);
 	}
 
-	public RealMatrix getCovarianceMatrix(RealVector expectedVector) {
-		return covarianceMatrixFinder.getCovarianceMatrix(getErrorVector(expectedVector));
+	public RealVector getVarianceVector() {
+		return varianceFinder.getVarianceVector();
 	}
 }

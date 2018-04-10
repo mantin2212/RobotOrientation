@@ -2,6 +2,7 @@ package utils;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 
 public class Utils {
 
@@ -40,5 +41,9 @@ public class Utils {
 			result.setEntry(i, i, 1);
 
 		return result;
+	}
+
+	public static RealVector getSquared(RealVector vector) {
+		return vector.ebeMultiply(vector);
 	}
 }
