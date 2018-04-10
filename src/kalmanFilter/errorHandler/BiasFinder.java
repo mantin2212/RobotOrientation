@@ -12,7 +12,7 @@ import org.apache.commons.math3.linear.RealVector;
 public class BiasFinder {
 
 	// the sum of the measurement vectors
-	private RealVector resultSum;
+	private RealVector meaesurementSumVector;
 
 	// the number of measurement, set to 0
 	private int measurementNumber = 0;
@@ -21,21 +21,22 @@ public class BiasFinder {
 	 * creates a new {@link BiasFinder} object, with a default result sum (0 vector)
 	 * 
 	 * @param measurementVectorSize
+	 *            the number of devices
 	 */
 	public BiasFinder(int measurementVectorSize) {
-		this.resultSum = new ArrayRealVector(measurementVectorSize);
+		this.meaesurementSumVector = new ArrayRealVector(measurementVectorSize);
 	}
 
 	/**
-	 * adds a received measurement vector to the statistics.
+	 * adds a received measurement vector to the analyzation.
 	 * 
-	 * @param measurement
+	 * @param newMeasurementVector
 	 *            the measured vector
 	 */
-	public void addMeasurement(RealVector measurement) {
-		if (measurement.getDimension() == resultSum.getDimension()) {
+	public void addMeasurement(RealVector newMeasurementVector) {
+		if (newMeasurementVector.getDimension() == meaesurementSumVector.getDimension()) {
 			// adding the new measurement
-			resultSum.add(measurement);
+			meaesurementSumVector.add(newMeasurementVector);
 			// updating the measurement number
 			measurementNumber++;
 		} else
@@ -44,12 +45,12 @@ public class BiasFinder {
 
 	/**
 	 * returns a vector, which contains the average bias of the data suppliers,
-	 * according to a received expected vector *
+	 * according to a received expected vector
 	 * 
 	 * @param expected
 	 *            the data which should be measured
 	 * @return the average difference between the measurements to the expected
-	 *         vector
+	 *         measurement vector
 	 */
 	public RealVector getErrorVector(RealVector expected) {
 		/*
@@ -57,7 +58,7 @@ public class BiasFinder {
 		 * measurements, n- the number of measurements, and e- the expected state the
 		 * sensors should measure
 		 */
-		RealVector errorAvg = resultSum.mapDivide(measurementNumber).subtract(expected);
+		RealVector errorAvg = meaesurementSumVector.mapDivide(measurementNumber).subtract(expected);
 
 		return errorAvg;
 	}
