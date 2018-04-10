@@ -1,6 +1,5 @@
 package kalmanFilter.errorHandler;
 
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import utils.VarianceFinder;
