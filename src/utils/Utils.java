@@ -75,4 +75,8 @@ public class Utils {
 
 		return result;
 	}
+
+	public static RealVector getSquared(RealVector vector) {
+		return vector.ebeMultiply(vector);
+	}
 }
