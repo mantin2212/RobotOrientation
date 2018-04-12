@@ -49,6 +49,10 @@ public class Utils {
 		return vector.ebeMultiply(vector);
 	}
 
+	public static Point byAngleAndSize(double norm, double argument) {
+		return rotate(new Point(norm, 0), argument);
+	}
+
 	public static Point rotate(Point relativeVector, double angle) {
 
 		double relativeX = relativeVector.getX();
