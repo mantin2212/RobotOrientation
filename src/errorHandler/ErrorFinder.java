@@ -2,7 +2,7 @@ package errorHandler;
 
 import org.apache.commons.math3.linear.RealVector;
 
-import utils.VarianceFinder;
+import orientationUtils.VarianceFinder;
 
 public class ErrorFinder {
 

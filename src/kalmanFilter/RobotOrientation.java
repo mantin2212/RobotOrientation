@@ -11,10 +11,10 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import utils.OrientationConstants;
-import utils.Point3D;
-import utils.RelativeDataHandler;
-import utils.Utils;
+import orientationUtils.OrientationConstants;
+import orientationUtils.Point3D;
+import orientationUtils.RelativeDataHandler;
+import orientationUtils.Utils;
 
 public class RobotOrientation {
 
