@@ -61,4 +61,8 @@ public class Utils {
 		return new Point(absoluteX, absoluteY);
 	}
 
+	public static double findThirdSide(double side1, double side2, double angle) {
+		return Math.sqrt(side1 * side1 + side2 * side2 - 2 * side1 * side2 * Math.cos(angle));
+	}
+
 }
