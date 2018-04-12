@@ -64,7 +64,8 @@ public class Utils {
 	 * Matrix</a>
 	 * 
 	 * @param size
-	 * @return
+	 *            - the size (number of rows and columns) of the unit matrix
+	 * @return - a unit matrix in the wanted size
 	 */
 	public static RealMatrix getUnitMatrix(int size) {
 		RealMatrix result = new Array2DRowRealMatrix(size, size);
