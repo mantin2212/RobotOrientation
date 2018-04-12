@@ -45,26 +45,66 @@ public class Utils {
 		return result;
 	}
 
+	/**
+	 * multiplies a given vector by itself, element by element
+	 * 
+	 * @param vector
+	 *            the vector which should be squared
+	 * @return a vector, containing the squares of the elements in the given vector
+	 */
 	public static RealVector getSquared(RealVector vector) {
 		return vector.ebeMultiply(vector);
 	}
 
+	/**
+	 * calculates and returns a vector by its norm and argument
+	 * 
+	 * @param norm
+	 *            the norm of the wanted vector
+	 * @param argument
+	 *            the argument of the wanted vector
+	 * @return a vector with the given norm and argument, presented as a point
+	 */
 	public static Point byAngleAndSize(double norm, double argument) {
-		return rotate(new Point(norm, 0), argument);
+		// calculating the x, y of the result vector
+		double resultX = norm * Math.cos(argument);
+		double resultY = norm * Math.sin(argument);
+		// returning the result as a point
+		return new Point(resultX, resultY);
 	}
 
-	public static Point rotate(Point relativeVector, double angle) {
+	/**
+	 * rotates a given vector, by a given angle, and returns the result
+	 * 
+	 * @param vector
+	 *            the vector, presented as a point
+	 * @param angle
+	 *            the wanted rotate angle
+	 * @return a vector with the same size as the given one, and with the wanted
+	 *         argument (v.arg+angle)
+	 */
+	public static Point rotate(Point vector, double angle) {
+		// calculating the norm and argument of the vector
+		double norm = Point.distance(vector, new Point(0, 0));
+		double argument = Math.atan(vector.getY() / vector.getX());
 
-		double relativeX = relativeVector.getX();
-		double relativeY = relativeVector.getY();
-
-		// calculating the absolute axis values of the vector
-		double absoluteX = relativeY * Math.sin(angle) + relativeX * Math.cos(angle);
-		double absoluteY = relativeY * Math.cos(angle) - relativeX * Math.sin(angle);
-
-		return new Point(absoluteX, absoluteY);
+		// returning a vector with the same size and the new argument
+		return byAngleAndSize(norm, argument + angle);
 	}
 
+	/**
+	 * uses the cosine law to return the third side of a triangle, knowing the two
+	 * other sides and the angle between them
+	 * 
+	 * @param side1
+	 *            one side of a triangle
+	 * @param side2
+	 *            another side of the triangle
+	 * @param angle
+	 *            the angle between the two sides above
+	 * @return the third side of the triangle, calculated by the formula: s3 =
+	 *         sqrt(s1^2+s2^2-2*s1*s2*cos(angle))
+	 */
 	public static double findThirdSide(double side1, double side2, double angle) {
 		return Math.sqrt(side1 * side1 + side2 * side2 - 2 * side1 * side2 * Math.cos(angle));
 	}
