@@ -1,4 +1,4 @@
-package kalmanFilter.errorHandler;
+package errorHandler;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
