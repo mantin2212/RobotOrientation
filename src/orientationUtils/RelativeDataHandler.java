@@ -1,4 +1,4 @@
-package utils;
+package orientationUtils;
 
 import java.util.function.Supplier;
 

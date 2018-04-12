@@ -1,4 +1,4 @@
-package utils;
+package orientationUtils;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
