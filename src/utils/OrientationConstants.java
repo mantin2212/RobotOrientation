@@ -11,7 +11,6 @@ public class OrientationConstants {
 	 * <li>H - the measurement matrix</li>
 	 * <li>Q - the process noise covariance matrix</li>
 	 * <li>R - the measurement noise covariance matrix</li>
-	 * <li>P - the error covariance matrix</li>
 	 * </ul>
 	 */
 	public static class KalmanFilterMatrices {
