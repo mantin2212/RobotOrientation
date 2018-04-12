@@ -63,19 +63,29 @@ class VarianceFinder {
 			throw new IllegalArgumentException("illegal result vector size");
 	}
 
+	// TODO - is the explanation for the reason mean=average is ok?
 	/**
 	 * calculates and returns the variance vector according to the results added
 	 * by {@link #addResultVector(newResults)} until this method was called.
+	 * 
+	 * The mathematical formula for calculating the variance of a random
+	 * variable is as follows: </br>
+	 * Var(x) = E[x^2] - (E[x])^2</br>
+	 * where "X" is the random variable and "E[X]" is the mean of X (in that
+	 * case, because of the finite number of samples taken from the sensors, the
+	 * mean can be considered as the average)
 	 * 
 	 * @return The variance vector of the given random variables vectors (or -
 	 *         the given sensors samples' vectors)
 	 * 
 	 */
 	public RealVector getVarianceVector() {
-
+		// calculate the means (like average) of the result and the result
+		// square vectors
 		RealVector resultSquareMeanVector = variableResultSquareSum.mapDivide(resultNumber);
 		RealVector resultMeanVector = variableResultSum.mapDivide(resultNumber);
-
+		// calculate and return the variance vector according to the
+		// mathematical formula
 		return resultSquareMeanVector.subtract(Utils.getSquared(resultMeanVector));
 	}
 }
