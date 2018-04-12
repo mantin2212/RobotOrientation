@@ -1,5 +1,10 @@
 package utils;
 
+/**
+ * A class representing a 3D point with x, y, and z positions and yaw, roll, and
+ * pitch angles
+ *
+ */
 public class Point3D {
 
 	private double x;

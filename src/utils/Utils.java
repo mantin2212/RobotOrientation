@@ -2,10 +2,32 @@ package utils;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
 
+/**
+ * This class contains useful static methods which calculate several important
+ * things to be used in the RobotOrientation project
+ *
+ */
 public class Utils {
 
+	/**
+	 * This method returns the transformation matrix to transform measurements
+	 * from the body frame to the navigation frame. </br>
+	 * </br>
+	 * see page 2908 part 2.1.1 in the article for the use of the transformation
+	 * matrix. </br>
+	 * see page 2909 part 2.1.2 in the article for the building of the
+	 * transformation matrix.
+	 * 
+	 * @param yaw
+	 *            - the measured yaw angle
+	 * @param roll
+	 *            - the measured roll angle
+	 * @param pitch
+	 *            - the measured pitch angle
+	 * @return - The transformation matrix to transform measurements from the
+	 *         body frame to the navigation frame
+	 */
 	public static RealMatrix getTransformationMatrix(double yaw, double roll, double pitch) {
 		RealMatrix result = new Array2DRowRealMatrix(3, 3);
 
@@ -34,6 +56,17 @@ public class Utils {
 		return result;
 	}
 
+	/**
+	 * This method returns the unit matrix (also called "Identity Matrix").
+	 * </br>
+	 * To learn more about the unit matrix, see
+	 * <a href="https://en.wikipedia.org/wiki/Identity_matrix">The Unit
+	 * Matrix</a>
+	 * 
+	 * @param size
+	 *            - the size (number of rows and columns) of the unit matrix
+	 * @return - a unit matrix in the wanted size
+	 */
 	public static RealMatrix getUnitMatrix(int size) {
 		RealMatrix result = new Array2DRowRealMatrix(size, size);
 
