@@ -1,7 +1,9 @@
-package utils;
+package errorHandler;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
+
+import utils.Utils;
 
 /**
  * this class is used to find the variance of multiple random variables, using
@@ -14,7 +16,7 @@ import org.apache.commons.math3.linear.RealVector;
  * 
  * @author noam mantin
  */
-public class VarianceFinder {
+class VarianceFinder {
 
 	// the sum of the variables' returned values (in our case - the sum of the
 	// measurement vectors
