@@ -1,8 +1,10 @@
-package utils;
+package orientationUtils;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+
+import utils.Point;
 
 public class Utils {
 
@@ -46,4 +48,17 @@ public class Utils {
 	public static RealVector getSquared(RealVector vector) {
 		return vector.ebeMultiply(vector);
 	}
+
+	public static Point rotate(Point relativeVector, double angle) {
+
+		double relativeX = relativeVector.getX();
+		double relativeY = relativeVector.getY();
+
+		// calculating the absolute axis values of the vector
+		double absoluteX = relativeY * Math.sin(angle) + relativeX * Math.cos(angle);
+		double absoluteY = relativeY * Math.cos(angle) - relativeX * Math.sin(angle);
+
+		return new Point(absoluteX, absoluteY);
+	}
+
 }
