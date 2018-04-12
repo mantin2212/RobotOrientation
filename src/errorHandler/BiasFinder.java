@@ -9,7 +9,7 @@ import org.apache.commons.math3.linear.RealVector;
  * 
  * @author noam mantin
  */
-public class BiasFinder {
+class BiasFinder {
 
 	// the sum of the measurement vectors
 	private RealVector meaesurementSumVector;
