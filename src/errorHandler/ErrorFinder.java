@@ -8,7 +8,7 @@ import org.apache.commons.math3.linear.RealVector;
  *
  * The general flow of the usage of this classe's methods is as follows:
  * <ul>
- * <li>constructing a new ErrorFinder in the size of the number of sensors</li>
+ * <li>constructing a new ErrorFinder with a given number of sensors</li>
  * <li>taking measurements samples from the sensors and adding them to the
  * ErrorFinder via the {@link #addMeasurement(measurements)} method</li>
  * <li>after the wanted number of samples have been taken from the sensors and
