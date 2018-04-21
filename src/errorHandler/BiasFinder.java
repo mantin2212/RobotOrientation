@@ -14,7 +14,7 @@ class BiasFinder {
 	// the sum of the measurement vectors
 	private RealVector meaesurementSumVector;
 
-	// the number of measurement, set to 0
+	// the number of measurements, set to 0
 	private int measurementNumber = 0;
 
 	/**
