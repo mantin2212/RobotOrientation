@@ -18,14 +18,18 @@ import utils.Utils;
  */
 class VarianceFinder {
 
-	// the sum of the variables' returned values (in our case - the sum of the
-	// measurement vectors
+	/*
+	 * the sum of the variables' returned values (in our case - the sum of the
+	 * measurement vectors
+	 */
 	private RealVector variableResultSum;
 	// the sum of the variables' returned values' squares
 	private RealVector variableResultSquareSum;
 
-	// the number of values returned (in our case - the number of samples taken
-	// from the sensor)
+	/*
+	 * the number of values returned (in our case - the number of samples taken
+	 * from the sensor)
+	 */
 	private int resultNumber = 0;
 
 	/**
@@ -63,7 +67,6 @@ class VarianceFinder {
 			throw new IllegalArgumentException("illegal result vector size");
 	}
 
-	// TODO - is the explanation for the reason mean=average is ok?
 	/**
 	 * calculates and returns the variance vector according to the results added
 	 * by {@link #addResultVector(newResults)} until this method was called.
@@ -80,12 +83,16 @@ class VarianceFinder {
 	 * 
 	 */
 	public RealVector getVarianceVector() {
-		// calculate the means (like average) of the result and the result
-		// square vectors
+		/*
+		 * calculate the means (like average) of the result and the result
+		 * square vectors
+		 */
 		RealVector resultSquareMeanVector = variableResultSquareSum.mapDivide(resultNumber);
 		RealVector resultMeanVector = variableResultSum.mapDivide(resultNumber);
-		// calculate and return the variance vector according to the
-		// mathematical formula
+		/*
+		 * calculate and return the variance vector according to the
+		 * mathematical formula
+		 */
 		return resultSquareMeanVector.subtract(Utils.getSquared(resultMeanVector));
 	}
 }
