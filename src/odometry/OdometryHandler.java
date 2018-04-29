@@ -97,7 +97,7 @@ public class OdometryHandler {
 			 * using the cosine law to find the robot's displacement's norm
 			 * (Δλ). (equation 24)
 			 */
-			centerDistance = Utils.findThirdSide(rotationRadius, rotationRadius, yawDifference);
+			centerDistance = Utils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
 		}
 		// the argument of the displacement vector
 		double arg = yaw0 + 1 / 2 * yawDifference;

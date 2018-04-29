@@ -105,7 +105,7 @@ public class Utils {
 	 * @return the third side of the triangle, calculated by the formula: s3 =
 	 *         sqrt(s1^2+s2^2-2*s1*s2*cos(angle))
 	 */
-	public static double findThirdSide(double side1, double side2, double angle) {
+	public static double cosineLaw(double side1, double side2, double angle) {
 		return Math.sqrt(side1 * side1 + side2 * side2 - 2 * side1 * side2 * Math.cos(angle));
 	}
 
