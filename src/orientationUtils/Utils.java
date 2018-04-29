@@ -50,27 +50,30 @@ public class Utils {
 	 * 
 	 * @param vector
 	 *            the vector which should be squared
-	 * @return a vector, containing the squares of the elements in the given vector
+	 * @return a vector, containing the squares of the elements in the given
+	 *         vector
 	 */
 	public static RealVector getSquared(RealVector vector) {
 		return vector.ebeMultiply(vector);
 	}
 
 	/**
-	 * calculates and returns a vector by its norm and argument
+	 * calculates and returns the two legs of a triangle by its hypotenuse and
+	 * the argument facing the Y leg.
 	 * 
-	 * @param norm
-	 *            the norm of the wanted vector
+	 * @param hypotenuse
+	 *            the hypotenuse's length
 	 * @param argument
-	 *            the argument of the wanted vector
-	 * @return a vector with the given norm and argument, presented as a point
+	 *            the argument facing the Y leg.
+	 * @return a point containing the lengths of the X and Y legs of the
+	 *         triangle in that order: (X,Y)
 	 */
-	public static Point byAngleAndSize(double norm, double argument) {
-		// calculating the x, y of the result vector
-		double resultX = norm * Math.cos(argument);
-		double resultY = norm * Math.sin(argument);
+	public static Point findLegsByHypotenuseAndArg(double hypotenuse, double argument) {
+		// calculating the lengths of the X and Y legs
+		double legX = hypotenuse * Math.cos(argument);
+		double legY = hypotenuse * Math.sin(argument);
 		// returning the result as a point
-		return new Point(resultX, resultY);
+		return new Point(legX, legY);
 	}
 
 	/**
@@ -89,12 +92,12 @@ public class Utils {
 		double argument = Math.atan(vector.getY() / vector.getX());
 
 		// returning a vector with the same size and the new argument
-		return byAngleAndSize(norm, argument + angle);
+		return findLegsByHypotenuseAndArg(norm, argument + angle);
 	}
 
 	/**
-	 * uses the cosine law to return the third side of a triangle, knowing the two
-	 * other sides and the angle between them
+	 * uses the cosine law to return the third side of a triangle, knowing the
+	 * two other sides and the angle between them
 	 * 
 	 * @param side1
 	 *            one side of a triangle

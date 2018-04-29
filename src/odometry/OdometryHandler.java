@@ -106,6 +106,6 @@ public class OdometryHandler {
 		 * building the displacement vector by an argument and a norm (Δϕ).
 		 * (equation 26)
 		 */
-		return Utils.byAngleAndSize(centerDistance, arg);
+		return Utils.findLegsByHypotenuseAndArg(centerDistance, arg);
 	}
 }
