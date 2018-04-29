@@ -33,7 +33,7 @@ class BiasFinder {
 	 * @param newMeasurementVector
 	 *            the measured vector
 	 */
-	public void addMeasurement(double... newMeasurementVector) {
+	protected void addMeasurement(double... newMeasurementVector) {
 		if (newMeasurementVector.length == meaesurementSumVector.getDimension()) {
 			// adding the new measurement
 			meaesurementSumVector.add(new ArrayRealVector(newMeasurementVector));
