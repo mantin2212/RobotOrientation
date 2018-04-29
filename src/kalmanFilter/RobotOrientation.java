@@ -28,10 +28,10 @@ public class RobotOrientation {
 
 		this.position = initialPosition;
 
-		RealVector initial = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
+		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
 
 		ProcessModel processModel = new DefaultProcessModel(OrientationConstants.KalmanFilterMatrices.A_MATRIX,
-				OrientationConstants.KalmanFilterMatrices.B_MATRIX, processNoise, initial, null);
+				OrientationConstants.KalmanFilterMatrices.B_MATRIX, processNoise, initialStateEstimate, null);
 
 		MeasurementModel measurementModel = new DefaultMeasurementModel(
 				OrientationConstants.KalmanFilterMatrices.H_MATRIX, measurementNoise);
