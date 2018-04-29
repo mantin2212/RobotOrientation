@@ -58,31 +58,54 @@ public class OdometryHandler {
 	 * 
 	 */
 	public Point getDifference(double yaw0) {
-		// the norm of the displacement vector
-		double result;
+		/*
+		 * The robot's displacement's norm, i.e the length of the straight line
+		 * starting from the previous center location of the robot and ending in
+		 * the current center location. Signified in the article by the letter
+		 * Δλ
+		 */
+		double centerDistance;
 
-		// getting the displacements of each side of the robot
+		/*
+		 * Getting the distance each side of the robot has passed. Signified in
+		 * the article by the letters a(l) and a(r)
+		 */
 		double rightDistance = rightDistanceSupplier.get();
 		double leftDistance = leftDistanceSupplier.get();
 
-		// calculating the yaw difference using geometry laws
+		/*
+		 * calculating the yaw difference using geometry laws. Signified by Δϕ
+		 * in the article. (equation 22)
+		 */
 		double yawDifference = (leftDistance - rightDistance) / robotWidth;
 
 		if (rightDistance == leftDistance) {
 			// the robot moved in a straight line
-			result = rightDistance;
+			centerDistance = rightDistance;
 		} else {
-			// calculating the displacement of the middle of the robot
+			/*
+			 * calculating the displacement of the middle of the robot.
+			 * Signified in the article as ak (equation 21)
+			 */
 			double distance = (rightDistance + leftDistance) / 2;
-			// calculating the rotation radius of the robot's movement
+			/*
+			 * calculating the rotation radius of the robot's movement.
+			 * Signified by r in the article. (equation 23).
+			 */
 			double rotationRadius = distance / yawDifference;
-			// using the cosine law to find the robot's displacement's norm
-			result = Utils.findThirdSide(rotationRadius, rotationRadius, yawDifference);
+			/*
+			 * using the cosine law to find the robot's displacement's norm
+			 * (Δλ). (equation 24)
+			 */
+			centerDistance = Utils.findThirdSide(rotationRadius, rotationRadius, yawDifference);
 		}
 		// the argument of the displacement vector
 		double arg = yaw0 + 1 / 2 * yawDifference;
 
-		// building the displacement vector by an argument and a norm
-		return Utils.byAngleAndSize(result, arg);
+		/*
+		 * building the displacement vector by an argument and a norm (Δϕ).
+		 * (equation 26)
+		 */
+		return Utils.byAngleAndSize(centerDistance, arg);
 	}
 }
