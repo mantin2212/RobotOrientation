@@ -26,18 +26,40 @@ import java.util.function.Supplier;
  * 
  */
 public class RelativeDataSupplier implements Supplier<Double> {
-
-	private Supplier<Double> relativeDataSupplier;
-
+	/**
+	 * The {@link Supplier} providing the measured values.
+	 */
+	private Supplier<Double> valueSupplier;
+	/**
+	 * The {@link #valueSupplier}'s value recorded whenever the {@link #get()}
+	 * method is called,
+	 */
 	private double lastValue;
 
-	public RelativeDataSupplier(Supplier<Double> relativeValueSupplier) {
-		this.relativeDataSupplier = relativeValueSupplier;
-		lastValue = relativeDataSupplier.get();
+	/**
+	 * This constructs a new {@link RelativeDataSupplier} which will return the
+	 * difference between two values provided by the ValueSupplier parameter
+	 * using the {@link #get()} method.
+	 * 
+	 * @param ValueSupplier
+	 *            - The {@link Supplier} providing the measured values.
+	 * 
+	 * @see Supplier
+	 */
+	public RelativeDataSupplier(Supplier<Double> ValueSupplier) {
+		this.valueSupplier = ValueSupplier;
+		lastValue = valueSupplier.get();
 	}
 
+	/**
+	 * This method is the primary utility of the
+	 * {@link RelativeDataSupplier}.</br>
+	 * It calculates the difference between the current value of the
+	 * {@link #valueSupplier} and its recorded value from the last call of the
+	 * {@link #get()} method.
+	 */
 	public Double get() {
-		double currentValue = relativeDataSupplier.get();
+		double currentValue = valueSupplier.get();
 
 		double result = currentValue - lastValue;
 		lastValue = currentValue;
