@@ -8,9 +8,9 @@ import java.util.function.Supplier;
  * supplier.</br>
  * </br>
  * 
- * The instances of this class have one method called
- * {@link #getLastDifference()}, which returns the difference between the
- * current measured value and the last measured value.</br>
+ * The instances of this class have one method called {@link #get()}, which
+ * returns the difference between the current measured value and the last
+ * measured value.</br>
  * </br>
  * 
  * Use an instance of this class when you are interested in the difference
@@ -22,19 +22,21 @@ import java.util.function.Supplier;
  * measurement.
  * </p>
  * 
+ * @see Supplier
+ * 
  */
-public class RelativeDataHandler {
+public class RelativeDataSupplier implements Supplier<Double> {
 
 	private Supplier<Double> relativeDataSupplier;
 
 	private double lastValue;
 
-	public RelativeDataHandler(Supplier<Double> relativeValueSupplier) {
+	public RelativeDataSupplier(Supplier<Double> relativeValueSupplier) {
 		this.relativeDataSupplier = relativeValueSupplier;
 		lastValue = relativeDataSupplier.get();
 	}
 
-	public double getLastDifference() {
+	public Double get() {
 		double currentValue = relativeDataSupplier.get();
 
 		double result = currentValue - lastValue;

@@ -13,7 +13,7 @@ import org.apache.commons.math3.linear.RealVector;
 
 import orientationUtils.OrientationConstants;
 import orientationUtils.Point3D;
-import orientationUtils.RelativeDataHandler;
+import orientationUtils.RelativeDataSupplier;
 import orientationUtils.Utils;
 
 public class RobotOrientation {
@@ -21,7 +21,7 @@ public class RobotOrientation {
 	private KalmanFilter movementFilter;
 	private Point3D position;
 
-	private RelativeDataHandler timeController;
+	private RelativeDataSupplier timeController;
 
 	public RobotOrientation(Point3D initialPosition, Supplier<Double> getRelativeTime, RealMatrix processNoise,
 			RealMatrix measurementNoise) {
@@ -38,7 +38,7 @@ public class RobotOrientation {
 
 		movementFilter = new KalmanFilter(processModel, measurementModel);
 
-		this.timeController = new RelativeDataHandler(getRelativeTime);
+		this.timeController = new RelativeDataSupplier(getRelativeTime);
 	}
 
 	public Point3D getPosition() {
@@ -48,7 +48,7 @@ public class RobotOrientation {
 	public void update(RealVector measurement, RealVector controlChanges, double yawAngle, double rollAngle,
 			double pitchAngle) {
 
-		double dt = timeController.getLastDifference();
+		double dt = timeController.get();
 
 		movementFilter.predict(controlChanges);
 		movementFilter.correct(measurement);

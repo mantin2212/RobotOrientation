@@ -17,10 +17,10 @@ public class OdometryHandler {
 	/**
 	 * the encoders of both sides
 	 * 
-	 * @see RelativeDataHandler
+	 * @see RelativeDataSupplier
 	 */
-	private RelativeDataHandler leftEncoder;
-	private RelativeDataHandler rightEncoder;
+	private RelativeDataSupplier leftEncoder;
+	private RelativeDataSupplier rightEncoder;
 	// the width of the robot
 	private double robotWidth;
 
@@ -37,8 +37,8 @@ public class OdometryHandler {
 	public OdometryHandler(Supplier<Double> leftEncoderSupplier, Supplier<Double> rightEncoderSupplier,
 			double robotWidth) {
 		// creating the encoders' data handlers using the suppliers
-		leftEncoder = new RelativeDataHandler(leftEncoderSupplier);
-		rightEncoder = new RelativeDataHandler(rightEncoderSupplier);
+		leftEncoder = new RelativeDataSupplier(leftEncoderSupplier);
+		rightEncoder = new RelativeDataSupplier(rightEncoderSupplier);
 
 		this.robotWidth = robotWidth;
 	}
@@ -57,8 +57,8 @@ public class OdometryHandler {
 		double result;
 
 		// getting the displacements of each side of the robot
-		double rightDistance = rightEncoder.getLastDifference();
-		double leftDistance = leftEncoder.getLastDifference();
+		double rightDistance = rightEncoder.get();
+		double leftDistance = leftEncoder.get();
 
 		// calculating the yaw difference using geometry laws
 		double yawDifference = (leftDistance - rightDistance) / robotWidth;
