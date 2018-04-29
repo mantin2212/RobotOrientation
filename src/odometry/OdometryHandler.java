@@ -15,7 +15,8 @@ import utils.Point;
 public class OdometryHandler {
 
 	/**
-	 * the encoders of both sides
+	 * the {@link Supplier} of the difference between the encoders of both
+	 * sides' values
 	 * 
 	 * @see RelativeDataSupplier
 	 */
@@ -44,13 +45,17 @@ public class OdometryHandler {
 	}
 
 	/**
-	 * calculates the displacement of the robot since the last check.
+	 * Calculates and returns the displacement of the robot since the last
+	 * check.</br>
+	 * 
+	 * for more information about this process, see pages 2910-2911 in the main
+	 * article from the README file
 	 * 
 	 * @param yaw0
 	 *            the yaw angle of the robot in the beginning of the movement
-	 * @return the displacement vector of the robot, from the last call to the
-	 *         function, in the navigation frame. for explanation, see pages
-	 *         2910-2911 in the article from the readme file
+	 * @return the displacement vector of the robot, from the last call to this
+	 *         method, in the navigation frame.
+	 * 
 	 */
 	public Point getDifference(double yaw0) {
 		// the norm of the displacement vector
