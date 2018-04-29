@@ -2,10 +2,12 @@ package orientationUtils;
 
 import java.util.function.Supplier;
 
+import kalmanFilter.RobotOrientation;
+
 /**
  * This class represents an object with a changing value. </br>
- * The object may be a sensor measuring changing values, or any other data
- * supplier.</br>
+ * The object may be a sensor measuring changing values, time-steps, or any
+ * other data supplier.</br>
  * </br>
  * 
  * The instances of this class have one method called {@link #get()}, which
@@ -19,7 +21,9 @@ import java.util.function.Supplier;
  * <p>
  * note - in this project, this class is used in order to give us the difference
  * between two measurements of an encoder instead of the value of each
- * measurement.
+ * measurement, and the time passed between each
+ * {@link RobotOrientation#update(measurement,controlChanges, yawAngle,rollAngle, pitchAngle)}
+ * cycle.
  * </p>
  * 
  * @see Supplier
