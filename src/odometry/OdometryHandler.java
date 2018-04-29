@@ -53,8 +53,8 @@ public class OdometryHandler {
 	 * 
 	 * @param yaw0
 	 *            the yaw angle of the robot in the beginning of the movement
-	 * @return the displacement vector of the robot, from the last call to this
-	 *         method, in the navigation frame.
+	 * @return the displacement vector of the robot (ΔP(N) and ΔP(E)), from the
+	 *         last call to this method, in the navigation frame.
 	 * 
 	 */
 	public Point getDifference(double yaw0) {
