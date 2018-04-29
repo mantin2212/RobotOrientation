@@ -9,12 +9,12 @@ import org.apache.commons.math3.linear.RealVector;
  * 
  * @author noam mantin
  */
-public class BiasFinder {
+class BiasFinder {
 
 	// the sum of the measurement vectors
 	private RealVector meaesurementSumVector;
 
-	// the number of measurement, set to 0
+	// the number of measurements, set to 0
 	private int measurementNumber = 0;
 
 	/**
@@ -28,12 +28,12 @@ public class BiasFinder {
 	}
 
 	/**
-	 * adds a received measurement vector to the analyzation.
+	 * adds a received measurement vector to the analysis.
 	 * 
 	 * @param newMeasurementVector
 	 *            the measured vector
 	 */
-	public void addMeasurement(double... newMeasurementVector) {
+	protected void addMeasurement(double... newMeasurementVector) {
 		if (newMeasurementVector.length == meaesurementSumVector.getDimension()) {
 			// adding the new measurement
 			meaesurementSumVector.add(new ArrayRealVector(newMeasurementVector));
