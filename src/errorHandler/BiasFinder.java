@@ -28,7 +28,7 @@ class BiasFinder {
 	}
 
 	/**
-	 * adds a received measurement vector to the analyzation.
+	 * adds a received measurement vector to the analysis.
 	 * 
 	 * @param newMeasurementVector
 	 *            the measured vector
