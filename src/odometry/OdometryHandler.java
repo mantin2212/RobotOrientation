@@ -53,8 +53,8 @@ public class OdometryHandler {
 	 * 
 	 * @param yaw0
 	 *            the yaw angle of the robot in the beginning of the movement
-	 * @return the displacement vector of the robot (ΔP(N) and ΔP(E)), from the
-	 *         last call to this method, in the navigation frame.
+	 * @return the position rate vector of the robot (ΔX and ΔY), from the last
+	 *         call to this method, in the navigation frame.
 	 * 
 	 */
 	public Point getDifference(double yaw0) {
@@ -84,8 +84,8 @@ public class OdometryHandler {
 			centerDistance = rightDistance;
 		} else {
 			/*
-			 * calculating the displacement of the middle of the robot.
-			 * Signified in the article as ak (equation 21)
+			 * calculating the length of arch the middle of the robot has
+			 * passed. Signified in the article as ak (equation 21)
 			 */
 			double distance = (rightDistance + leftDistance) / 2;
 			/*
@@ -99,12 +99,15 @@ public class OdometryHandler {
 			 */
 			centerDistance = Utils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
 		}
-		// the argument of the displacement vector
+		// finding the argument of the displacement vector.
 		double arg = yaw0 + 1 / 2 * yawDifference;
 
 		/*
-		 * building the displacement vector by an argument and a norm (Δϕ).
-		 * (equation 26)
+		 * Building the displacement vector by an argument (arg) and a norm
+		 * (Δλ). </br> Now, as we have the argument and the norm of the
+		 * displacement vector (or in other words, the Cartesian form of the
+		 * vector), we can convert it to the polar form. Doing so gives us the
+		 * robot's position in the navigation system (equation 26)
 		 */
 		return Utils.findLegsByHypotenuseAndArg(centerDistance, arg);
 	}
