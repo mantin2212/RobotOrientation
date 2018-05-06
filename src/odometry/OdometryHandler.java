@@ -84,7 +84,7 @@ public class OdometryHandler {
 			centerDistance = rightDistance;
 		} else {
 			/*
-			 * calculating the length of arch the middle of the robot has
+			 * calculating the length of the arch the middle of the robot has
 			 * passed. Signified in the article as ak (equation 21)
 			 */
 			double distance = (rightDistance + leftDistance) / 2;
