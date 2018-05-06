@@ -82,13 +82,14 @@ public class Utils {
 	 * rotates a given vector, by a given angle, and returns the result
 	 * 
 	 * @param vector
-	 *            the vector, presented as a point
+	 *            the vector, represented in the polar form (as a point)
 	 * @param angle
 	 *            the wanted rotate angle
 	 * @return a vector with the same size as the given one, and with the wanted
-	 *         argument (v.arg+angle)
+	 *         argument (v.arg+angle). The returned vector is represented in the
+	 *         polar form (by it's X and Y components) as a point
 	 */
-	public static Point rotate(Point vector, double angle) {
+	public static Point rotateVector(Point vector, double angle) {
 		// calculating the norm and argument of the vector
 		double norm = Point.distance(vector, new Point(0, 0));
 		double argument = Math.atan(vector.getY() / vector.getX());
