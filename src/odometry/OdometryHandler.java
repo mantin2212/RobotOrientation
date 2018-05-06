@@ -104,10 +104,11 @@ public class OdometryHandler {
 
 		/*
 		 * Building the displacement vector by an argument (arg) and a norm
-		 * (Δλ). </br> Now, as we have the argument and the norm of the
-		 * displacement vector (or in other words, the Cartesian form of the
-		 * vector), we can convert it to the polar form. Doing so gives us the
-		 * robot's position in the navigation system (equation 26)
+		 * (Δλ). 
+		 * Now, as we have the argument and the norm of the displacement
+		 * vector (or in other words, the Cartesian form of the vector), we can
+		 * convert it to the polar form. Doing so gives us the robot's position
+		 * in the navigation system (equation 26)
 		 */
 		return Utils.convertPolarToCartesian(centerDistance, arg);
 	}
