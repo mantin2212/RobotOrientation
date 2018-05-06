@@ -109,6 +109,6 @@ public class OdometryHandler {
 		 * vector), we can convert it to the polar form. Doing so gives us the
 		 * robot's position in the navigation system (equation 26)
 		 */
-		return Utils.findLegsByHypotenuseAndArg(centerDistance, arg);
+		return Utils.convertPolarToCartesian(centerDistance, arg);
 	}
 }

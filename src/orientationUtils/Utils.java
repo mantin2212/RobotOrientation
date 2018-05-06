@@ -58,20 +58,22 @@ public class Utils {
 	}
 
 	/**
-	 * calculates and returns the two legs of a triangle by its hypotenuse and
-	 * the argument facing the Y leg.
+	 * This method receives a vector presented in the Polar form (norm and
+	 * argument) and return the Cartesian form of this vector (the X component
+	 * and the Y component)
 	 * 
-	 * @param hypotenuse
-	 *            the hypotenuse's length
+	 * @param norm
+	 *            the vector's length
 	 * @param argument
-	 *            the argument facing the Y leg.
-	 * @return a point containing the lengths of the X and Y legs of the
-	 *         triangle in that order: (X,Y)
+	 *            the argument of the vector (the argument between the vector
+	 *            and the X axis).
+	 * @return a point representing the the vector by its X and Y component (the
+	 *         polar form of the vector) in that order: (X,Y)
 	 */
-	public static Point findLegsByHypotenuseAndArg(double hypotenuse, double argument) {
-		// calculating the lengths of the X and Y legs
-		double legX = hypotenuse * Math.cos(argument);
-		double legY = hypotenuse * Math.sin(argument);
+	public static Point convertPolarToCartesian(double norm, double argument) {
+		// calculating the X and Y components
+		double legX = norm * Math.cos(argument);
+		double legY = norm * Math.sin(argument);
 		// returning the result as a point
 		return new Point(legX, legY);
 	}
@@ -92,7 +94,7 @@ public class Utils {
 		double argument = Math.atan(vector.getY() / vector.getX());
 
 		// returning a vector with the same size and the new argument
-		return findLegsByHypotenuseAndArg(norm, argument + angle);
+		return convertPolarToCartesian(norm, argument + angle);
 	}
 
 	/**
