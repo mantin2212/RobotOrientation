@@ -58,8 +58,8 @@ public class Utils {
 	}
 
 	/**
-	 * This method receives a vector presented in the Polar form (norm and
-	 * argument) and return the Cartesian form of this vector (the X component
+	 * This method receives a vector presented in the polar form (norm and
+	 * argument) and return the cartesian form of this vector (the X component
 	 * and the Y component)
 	 * 
 	 * @param norm
@@ -68,7 +68,7 @@ public class Utils {
 	 *            the argument of the vector (the argument between the vector
 	 *            and the X axis).
 	 * @return a point representing the the vector by its X and Y component (the
-	 *         polar form of the vector) in that order: (X,Y)
+	 *         cartesian form of the vector) in that order: (X,Y)
 	 */
 	public static Point convertPolarToCartesian(double norm, double argument) {
 		// calculating the X and Y components
@@ -82,12 +82,12 @@ public class Utils {
 	 * rotates a given vector, by a given angle, and returns the result
 	 * 
 	 * @param vector
-	 *            the vector, represented in the polar form (as a point)
+	 *            the vector, represented in the cartesian form (as a point)
 	 * @param angle
 	 *            the wanted rotate angle
 	 * @return a vector with the same size as the given one, and with the wanted
 	 *         argument (v.arg+angle). The returned vector is represented in the
-	 *         polar form (by it's X and Y components) as a point
+	 *         cartesian form (by it's X and Y components) as a point
 	 */
 	public static Point rotateVector(Point vector, double angle) {
 		// calculating the norm and argument of the vector
