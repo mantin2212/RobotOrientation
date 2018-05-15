@@ -1,5 +1,7 @@
 package kalmanFilter;
 
+import java.util.function.Supplier;
+
 import org.apache.commons.math3.filter.DefaultMeasurementModel;
 import org.apache.commons.math3.filter.DefaultProcessModel;
 import org.apache.commons.math3.filter.KalmanFilter;
@@ -9,33 +11,34 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import utils.OrientationConstants;
-import utils.Point3D;
-import utils.Utils;
+import orientationUtils.OrientationConstants;
+import orientationUtils.Point3D;
+import orientationUtils.RelativeDataSupplier;
+import orientationUtils.Utils;
 
 public class RobotOrientation {
 
 	private KalmanFilter movementFilter;
 	private Point3D position;
 
-	private TimeController controller;
+	private RelativeDataSupplier timeController;
 
-	public RobotOrientation(Point3D initialPosition, TimeController controller, RealMatrix processNoise,
+	public RobotOrientation(Point3D initialPosition, Supplier<Double> getRelativeTime, RealMatrix processNoise,
 			RealMatrix measurementNoise) {
 
 		this.position = initialPosition;
 
-		RealVector initial = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
+		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
 
 		ProcessModel processModel = new DefaultProcessModel(OrientationConstants.KalmanFilterMatrices.A_MATRIX,
-				OrientationConstants.KalmanFilterMatrices.B_MATRIX, processNoise, initial, null);
+				OrientationConstants.KalmanFilterMatrices.B_MATRIX, processNoise, initialStateEstimate, null);
 
 		MeasurementModel measurementModel = new DefaultMeasurementModel(
 				OrientationConstants.KalmanFilterMatrices.H_MATRIX, measurementNoise);
 
 		movementFilter = new KalmanFilter(processModel, measurementModel);
 
-		this.controller = controller;
+		this.timeController = new RelativeDataSupplier(getRelativeTime);
 	}
 
 	public Point3D getPosition() {
@@ -45,7 +48,7 @@ public class RobotOrientation {
 	public void update(RealVector measurement, RealVector controlChanges, double yawAngle, double rollAngle,
 			double pitchAngle) {
 
-		double dt = controller.getDT();
+		double dt = timeController.get();
 
 		movementFilter.predict(controlChanges);
 		movementFilter.correct(measurement);
