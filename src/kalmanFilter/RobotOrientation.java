@@ -23,43 +23,15 @@ public class RobotOrientation {
 
 	private RelativeDataSupplier timeController;
 
-	public RobotOrientation(Point3D initialPosition, Supplier<Double> getRelativeTime, RealMatrix processNoise,
-			RealMatrix measurementNoise) {
+	public RobotOrientation(double robotWidth) {
 
-		this.position = initialPosition;
-
-		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
-
-		ProcessModel processModel = new DefaultProcessModel(OrientationConstants.KalmanFilterMatrices.A_MATRIX,
-				OrientationConstants.KalmanFilterMatrices.B_MATRIX, processNoise, initialStateEstimate, null);
-
-		MeasurementModel measurementModel = new DefaultMeasurementModel(
-				OrientationConstants.KalmanFilterMatrices.H_MATRIX, measurementNoise);
-
-		movementFilter = new KalmanFilter(processModel, measurementModel);
-
-		this.timeController = new RelativeDataSupplier(getRelativeTime);
 	}
 
-	public void update(RealVector measurement, RealVector controlChanges, double yawAngle, double rollAngle,
-			double pitchAngle) {
+	public void initialize(Point3D initialPosition, Supplier<Double> getRelativeTime) {
 
-		double dt = timeController.get();
+	}
 
-		movementFilter.predict(controlChanges);
-		movementFilter.correct(measurement);
-
-		RealVector state = movementFilter.getStateEstimationVector();
-
-		RealMatrix transformationMatrix = Utils.getTransformationMatrix(yawAngle, rollAngle, pitchAngle);
-
-		state = transformationMatrix.preMultiply(state);
-
-		double velocityX = state.getEntry(0);
-		double velocityY = state.getEntry(1);
-		double velocityZ = state.getEntry(2);
-
-		position.move(dt * velocityX, dt * velocityY, dt * velocityZ);
+	public void update() {
 	}
 
 	public Point3D getPosition() {
