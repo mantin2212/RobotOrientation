@@ -78,6 +78,11 @@ public class Utils {
 		return result;
 	}
 
+	// TODO - fill it with coding stuff
+	public static RealMatrix getDiagonalMatrix(RealVector vector) {
+		return null;
+	}
+
 	/**
 	 * multiplies a given vector by itself, element by element
 	 * 
