@@ -3,11 +3,12 @@ package orientationUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
 /**
- * calculates and returns the variance vector of the sensors.
- * 
- * @return a vector, containing the variance of each sensor
- * 
- * @see VarianceFinder
+ * This class contains the Matrices in use in the kalman filter:</br>
+ * <ul>
+ * <li>A - the state transition matrix</li>
+ * <li>B - the control input matrix</li>
+ * <li>H - the measurement matrix</li>
+ * </ul>
  */
 public class OrientationConstants {
 	public static class KalmanFilterMatrices {
