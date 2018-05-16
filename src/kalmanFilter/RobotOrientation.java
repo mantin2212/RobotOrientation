@@ -41,10 +41,6 @@ public class RobotOrientation {
 		this.timeController = new RelativeDataSupplier(getRelativeTime);
 	}
 
-	public Point3D getPosition() {
-		return position;
-	}
-
 	public void update(RealVector measurement, RealVector controlChanges, double yawAngle, double rollAngle,
 			double pitchAngle) {
 
@@ -65,4 +61,9 @@ public class RobotOrientation {
 
 		position.move(dt * velocityX, dt * velocityY, dt * velocityZ);
 	}
+
+	public Point3D getPosition() {
+		return position;
+	}
+
 }
