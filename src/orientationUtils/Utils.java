@@ -13,8 +13,8 @@ import utils.Point;
  */
 public class Utils {
 	/**
-	 * This method returns the transformation matrix to transform measurements
-	 * from the body frame to the navigation frame. </br>
+	 * This method returns the transformation matrix to transform measurements from
+	 * the body frame to the navigation frame. </br>
 	 * </br>
 	 * see page 2908 part 2.1.1 in the article for the use of the transformation
 	 * matrix. </br>
@@ -27,8 +27,8 @@ public class Utils {
 	 *            - the measured roll angle
 	 * @param pitch
 	 *            - the measured pitch angle
-	 * @return - The transformation matrix to transform measurements from the
-	 *         body frame to the navigation frame
+	 * @return - The transformation matrix to transform measurements from the body
+	 *         frame to the navigation frame
 	 */
 	public static RealMatrix getTransformationMatrix(double yaw, double roll, double pitch) {
 		RealMatrix result = new Array2DRowRealMatrix(3, 3);
@@ -59,11 +59,9 @@ public class Utils {
 	}
 
 	/**
-	 * This method returns the unit matrix (also called "Identity Matrix").
-	 * </br>
+	 * This method returns the unit matrix (also called "Identity Matrix"). </br>
 	 * To learn more about the unit matrix, see
-	 * <a href="https://en.wikipedia.org/wiki/Identity_matrix">The Unit
-	 * Matrix</a>
+	 * <a href="https://en.wikipedia.org/wiki/Identity_matrix">The Unit Matrix</a>
 	 * 
 	 * @param size
 	 *            - the size (number of rows and columns) of the unit matrix
@@ -78,28 +76,37 @@ public class Utils {
 		return result;
 	}
 
+	public static RealMatrix getDiagonalMatrix(RealVector values) {
+		RealMatrix result = new Array2DRowRealMatrix(values.getDimension(), values.getDimension());
+
+		for (int i = 0; i < result.getColumnDimension(); i++) {
+			result.setEntry(i, i, values.getEntry(i));
+		}
+
+		return result;
+	}
+
 	/**
 	 * multiplies a given vector by itself, element by element
 	 * 
 	 * @param vector
 	 *            the vector which should be squared
-	 * @return a vector, containing the squares of the elements in the given
-	 *         vector
+	 * @return a vector, containing the squares of the elements in the given vector
 	 */
 	public static RealVector getSquared(RealVector vector) {
 		return vector.ebeMultiply(vector);
 	}
 
 	/**
-	 * This method receives a vector presented in the polar form (norm and
-	 * argument) and return the cartesian form of this vector (the X component
-	 * and the Y component)
+	 * This method receives a vector presented in the polar form (norm and argument)
+	 * and return the cartesian form of this vector (the X component and the Y
+	 * component)
 	 * 
 	 * @param norm
 	 *            the vector's length
 	 * @param argument
-	 *            the argument of the vector (the argument between the vector
-	 *            and the X axis).
+	 *            the argument of the vector (the argument between the vector and
+	 *            the X axis).
 	 * @return a point representing the the vector by its X and Y component (the
 	 *         cartesian form of the vector) in that order: (X,Y)
 	 */
@@ -132,8 +139,8 @@ public class Utils {
 	}
 
 	/**
-	 * uses the cosine law to return the third side of a triangle, knowing the
-	 * two other sides and the angle between them
+	 * uses the cosine law to return the third side of a triangle, knowing the two
+	 * other sides and the angle between them
 	 * 
 	 * @param side1
 	 *            one side of a triangle
