@@ -79,13 +79,18 @@ public class Utils {
 	}
 
 	// TODO - fill it with coding stuff
-	public static RealMatrix getDiagonalMatrix(RealVector vector) {
+	public static RealMatrix get0Matrix() {
 		return null;
 	}
 
-	// TODO - fill it with coding stuff
-	public static RealMatrix get0Matrix() {
-		return null;
+	public static RealMatrix getDiagonalMatrix(RealVector values) {
+		RealMatrix result = new Array2DRowRealMatrix(values.getDimension(), values.getDimension());
+
+		for (int i = 0; i < result.getColumnDimension(); i++) {
+			result.setEntry(i, i, values.getEntry(i));
+		}
+
+		return result;
 	}
 
 	/**
