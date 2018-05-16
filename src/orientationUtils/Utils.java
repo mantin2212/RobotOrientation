@@ -83,6 +83,11 @@ public class Utils {
 		return null;
 	}
 
+	// TODO - fill it with coding stuff
+	public static RealMatrix get0Matrix() {
+		return null;
+	}
+
 	/**
 	 * multiplies a given vector by itself, element by element
 	 * 
