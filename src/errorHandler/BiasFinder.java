@@ -52,6 +52,7 @@ class BiasFinder {
 	 * @return the average difference between the measurements to the expected
 	 *         measurement vector
 	 */
+	// TODO - change name to getBiasVector
 	public RealVector getErrorVector(RealVector expected) {
 		/*
 		 * calculating the average bias using: bias = Sm/n-e, when: Sm- the sum of the
