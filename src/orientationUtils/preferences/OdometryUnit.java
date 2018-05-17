@@ -5,11 +5,19 @@ import java.util.function.Supplier;
 import orientationUtils.RelativeDataSupplier;
 
 public class OdometryUnit {
+	/**
+	 * the {@link Supplier} of the difference between the encoders of both
+	 * sides' values
+	 * 
+	 * @see RelativeDataSupplier
+	 */
 	private RelativeDataSupplier leftDistanceSupplier;
 	private RelativeDataSupplier rightDistanceSupplier;
+	// the width of the robot
 	private double robotWidth;
 
 	public OdometryUnit(Supplier<Double> leftEncoder, Supplier<Double> rightEncoder, double robotWidth) {
+		// creating the encoders' data handlers using the suppliers
 		this.leftDistanceSupplier = new RelativeDataSupplier(leftEncoder);
 		this.rightDistanceSupplier = new RelativeDataSupplier(rightEncoder);
 		this.robotWidth = robotWidth;
