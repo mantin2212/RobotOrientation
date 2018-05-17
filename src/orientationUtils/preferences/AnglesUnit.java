@@ -2,13 +2,13 @@ package orientationUtils.preferences;
 
 import java.util.function.Supplier;
 
-public class PrincipalAxesUnit {
+public class AnglesUnit {
 
 	private Supplier<Double> yaw;
 	private Supplier<Double> pitch;
 	private Supplier<Double> roll;
 
-	public PrincipalAxesUnit(Supplier<Double> yaw, Supplier<Double> pitch, Supplier<Double> roll) {
+	public AnglesUnit(Supplier<Double> yaw, Supplier<Double> pitch, Supplier<Double> roll) {
 		this.yaw = yaw;
 		this.roll = roll;
 		this.pitch = pitch;
