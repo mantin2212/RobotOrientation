@@ -24,8 +24,8 @@ import orientationUtils.preferences.AnglesUnit;
 
 public class RobotOrientation {
 
-	AccelerationsUnit accelerationsUnit;
-	AnglesUnit anglesUnit;
+	private AccelerationsUnit accelerationsUnit;
+	private AnglesUnit anglesUnit;
 
 	private OdometryHandler odometryHandler;
 	private MeasurementHandler measurementHandler;
