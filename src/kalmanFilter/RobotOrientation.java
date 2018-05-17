@@ -79,7 +79,7 @@ public class RobotOrientation {
 		RealVector measurementVector = new ArrayRealVector(
 				new double[] { measurement.getX() / dt, measurement.getY() / dt });
 
-		// getting the control change from the acceleration unit
+		// getting the fixed control change from the acceleration unit
 		RealVector controlChanges = measurementHandler.apply(accelerationsUnit.getAcceleration());
 
 		// activating the kalman filter
