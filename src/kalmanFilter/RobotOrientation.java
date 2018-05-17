@@ -20,24 +20,26 @@ import orientationUtils.RelativeDataSupplier;
 import orientationUtils.Utils;
 import orientationUtils.preferences.AccelerationsUnit;
 import orientationUtils.preferences.OdometryUnit;
-import orientationUtils.preferences.PrincipalAxesUnit;
+import orientationUtils.preferences.AnglesUnit;
 
 public class RobotOrientation {
 
 	AccelerationsUnit accelerationsUnit;
-	PrincipalAxesUnit anglesUnit;
+	AnglesUnit anglesUnit;
 
 	private OdometryHandler odometryHandler;
+	private MeasurementHandler measurementHandler;
 
 	private KalmanFilter movementFilter;
 	private Point3D position;
 
 	private RelativeDataSupplier timeController;
 
-	public RobotOrientation(AccelerationsUnit accUnit, PrincipalAxesUnit anglesUnit, OdometryUnit odometryUnit) {
+	public RobotOrientation(AccelerationsUnit accUnit, AnglesUnit anglesUnit, OdometryUnit odometryUnit) {
 		this.accelerationsUnit = accUnit;
 		this.anglesUnit = anglesUnit;
-		
+
+		this.measurementHandler = new MeasurementHandler(anglesUnit);
 		this.odometryHandler = new OdometryHandler(odometryUnit);
 	}
 

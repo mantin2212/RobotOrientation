@@ -14,14 +14,11 @@ import orientationUtils.preferences.AnglesUnit;
 
 public class MeasurementHandler implements Function<RealVector, RealVector> {
 
-	private Orientation3D initialState;
-
 	private AnglesUnit anglesUnit;
 
 	private RealVector biases;
 
-	public MeasurementHandler(Orientation3D initialState, AnglesUnit anglesUnit, RealVector biases) {
-		this.initialState = initialState;
+	public MeasurementHandler(AnglesUnit anglesUnit, RealVector biases) {
 
 		this.anglesUnit = anglesUnit;
 
@@ -31,15 +28,15 @@ public class MeasurementHandler implements Function<RealVector, RealVector> {
 			throw new IllegalArgumentException("the biases' vector should have 3 elements");
 	}
 
-	public MeasurementHandler(Orientation3D initialState, AnglesUnit anglesUnit) {
-		this(initialState, anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
+	public MeasurementHandler(AnglesUnit anglesUnit) {
+		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
 	private RealVector toNavigationFrame(RealVector vector) {
 		// calculating the current orientation angles
-		double yaw = initialState.getYaw() + anglesUnit.getYaw();
-		double pitch = initialState.getPitch() + anglesUnit.getPitch();
-		double roll = initialState.getRoll() + anglesUnit.getRoll();
+		double yaw = anglesUnit.getInitialState().getYaw() + anglesUnit.getYaw();
+		double pitch = anglesUnit.getInitialState().getPitch() + anglesUnit.getPitch();
+		double roll = anglesUnit.getInitialState().getRoll() + anglesUnit.getRoll();
 
 		RealMatrix transformation = Utils.getTransformationMatrix(yaw, roll, pitch);
 		return transformation.preMultiply(vector);

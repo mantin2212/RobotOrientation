@@ -2,16 +2,20 @@ package orientationUtils.preferences;
 
 import java.util.function.Supplier;
 
+import orientationUtils.Orientation3D;
+
 public class AnglesUnit {
 
 	private Supplier<Double> yaw;
 	private Supplier<Double> pitch;
 	private Supplier<Double> roll;
+	private Orientation3D initialState;
 
-	public AnglesUnit(Supplier<Double> yaw, Supplier<Double> pitch, Supplier<Double> roll) {
+	public AnglesUnit(Supplier<Double> yaw, Supplier<Double> pitch, Supplier<Double> roll, Orientation3D initialState) {
 		this.yaw = yaw;
 		this.roll = roll;
 		this.pitch = pitch;
+		this.initialState = initialState;
 	}
 
 	public double getYaw() {
@@ -24,6 +28,10 @@ public class AnglesUnit {
 
 	public double getRoll() {
 		return roll.get();
+	}
+
+	public Orientation3D getInitialState() {
+		return initialState;
 	}
 
 }
