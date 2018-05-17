@@ -16,7 +16,6 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	private RealVector biases;
 
 	public AnglesConvertor(AnglesUnit anglesUnit, RealVector biases) {
-
 		this.anglesUnit = anglesUnit;
 
 		if (biases.getDimension() == 3)

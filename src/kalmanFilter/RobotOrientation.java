@@ -20,8 +20,9 @@ import orientationUtils.Point3D;
 import orientationUtils.RelativeDataSupplier;
 import orientationUtils.Utils;
 import orientationUtils.preferences.AccelerationsUnit;
-import orientationUtils.preferences.OdometryUnit;
 import orientationUtils.preferences.AnglesUnit;
+import orientationUtils.preferences.OdometryUnit;
+import utils.Point;
 
 public class RobotOrientation {
 
@@ -66,6 +67,35 @@ public class RobotOrientation {
 	}
 
 	public void update() {
+		// getting the time difference
+		double dt = timeController.get();
+
+		/*
+		 * calculating the velocity measurement by using: v = P/dt, when P is the
+		 * robot's displacement vector between two points and dt is the time passed
+		 * between these points
+		 */
+		Point measurement = odometryHandler.getDifference(anglesUnit.getYaw());
+		RealVector measurementVector = new ArrayRealVector(
+				new double[] { measurement.getX() / dt, measurement.getY() / dt });
+
+		// getting the control change from the acceleration unit
+		RealVector controlChanges = measurementHandler.apply(accelerationsUnit.getAcceleration());
+
+		// activating the kalman filter
+		movementFilter.predict(controlChanges);
+		movementFilter.correct(measurementVector);
+
+		// getting the filter's velocity estimation
+		RealVector velocity = movementFilter.getStateEstimationVector();
+
+		// dividing the velocity vector into x,y,z values.
+		double velocityX = velocity.getEntry(0);
+		double velocityY = velocity.getEntry(1);
+		double velocityZ = velocity.getEntry(2);
+
+		// moving the robot's position according to d = vt.
+		position.move(dt * velocityX, dt * velocityY, dt * velocityZ);
 	}
 
 	public Point3D getPosition() {

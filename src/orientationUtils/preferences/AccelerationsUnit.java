@@ -2,6 +2,9 @@ package orientationUtils.preferences;
 
 import java.util.function.Supplier;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
+
 public class AccelerationsUnit {
 	private Supplier<Double> accX;
 	private Supplier<Double> accZ;
@@ -24,5 +27,9 @@ public class AccelerationsUnit {
 
 	public double getAccZ() {
 		return accZ.get();
+	}
+
+	public RealVector getAcceleration() {
+		return new ArrayRealVector(new double[] { getAccX(), getAccY(), getAccZ() });
 	}
 }
