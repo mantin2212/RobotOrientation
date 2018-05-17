@@ -2,14 +2,11 @@
 package kalmanFilter;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import orientationUtils.Orientation3D;
-import orientationUtils.Utils;
 import orientationUtils.preferences.AnglesUnit;
 
 public class AnglesConvertor implements Function<RealVector, RealVector> {
