@@ -1,8 +1,7 @@
 package odometry;
 
-import java.util.function.Supplier;
-
-import orientationUtils.*;
+import orientationUtils.Utils;
+import orientationUtils.preferences.OdometryUnit;
 import utils.Point;
 
 /**
@@ -14,16 +13,7 @@ import utils.Point;
  */
 public class OdometryHandler {
 
-	/**
-	 * the {@link Supplier} of the difference between the encoders of both
-	 * sides' values
-	 * 
-	 * @see RelativeDataSupplier
-	 */
-	private RelativeDataSupplier leftDistanceSupplier;
-	private RelativeDataSupplier rightDistanceSupplier;
-	// the width of the robot
-	private double robotWidth;
+	OdometryUnit odometryUnit;
 
 	/**
 	 * creates a new {@link OdometryHandler} object, with given parameters
@@ -35,13 +25,8 @@ public class OdometryHandler {
 	 * @param robotWidth
 	 *            the width of the relevant robot
 	 */
-	public OdometryHandler(Supplier<Double> leftEncoderSupplier, Supplier<Double> rightEncoderSupplier,
-			double robotWidth) {
-		// creating the encoders' data handlers using the suppliers
-		leftDistanceSupplier = new RelativeDataSupplier(leftEncoderSupplier);
-		rightDistanceSupplier = new RelativeDataSupplier(rightEncoderSupplier);
-
-		this.robotWidth = robotWidth;
+	public OdometryHandler(OdometryUnit odometryUnit) {
+		this.odometryUnit = odometryUnit;
 	}
 
 	/**
@@ -70,14 +55,14 @@ public class OdometryHandler {
 		 * Getting the distance each side of the robot has passed. Signified in
 		 * the article by the letters a(l) and a(r)
 		 */
-		double rightDistance = rightDistanceSupplier.get();
-		double leftDistance = leftDistanceSupplier.get();
+		double rightDistance = odometryUnit.getRightDistance();
+		double leftDistance = odometryUnit.getLeftDistance();
 
 		/*
 		 * calculating the yaw difference using geometry laws. Signified by Δϕ
 		 * in the article. (equation 22)
 		 */
-		double yawDifference = (leftDistance - rightDistance) / robotWidth;
+		double yawDifference = (leftDistance - rightDistance) / odometryUnit.getRobotWidth();
 
 		if (rightDistance == leftDistance) {
 			// the robot moved in a straight line
