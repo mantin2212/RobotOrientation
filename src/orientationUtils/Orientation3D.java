@@ -1,5 +1,7 @@
 package orientationUtils;
 
+import org.apache.commons.math3.linear.RealMatrix;
+
 public class Orientation3D {
 
 	private double yaw;
@@ -22,5 +24,13 @@ public class Orientation3D {
 
 	public double getYaw() {
 		return yaw;
+	}
+
+	public Orientation3D getRelativeOrientation(double dYaw, double dPitch, double dRoll) {
+		return new Orientation3D(yaw + dYaw, roll + dRoll, pitch + dPitch);
+	}
+
+	public RealMatrix getTransformationMatrix() {
+		return Utils.getTransformationMatrix(yaw, roll, pitch);
 	}
 }
