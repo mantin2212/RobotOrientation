@@ -2,7 +2,6 @@ package orientationUtils.preferences;
 
 import java.util.function.Supplier;
 
-import kalmanFilter.MeasurementHandler;
 import orientationUtils.Orientation3D;
 
 public class AnglesUnit {
@@ -55,5 +54,4 @@ public class AnglesUnit {
 	public Orientation3D getCurrentState() {
 		return initialState.getRelativeOrientation(getYaw(), getPitch(), getRoll());
 	}
-
 }
