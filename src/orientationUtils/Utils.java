@@ -12,58 +12,11 @@ import utils.Point;
  *
  */
 public class Utils {
-	/**
-	 * This method returns the transformation matrix to transform measurements
-	 * from the body frame to the navigation frame. </br>
-	 * </br>
-	 * see page 2908 part 2.1.1 in the article for the use of the transformation
-	 * matrix. </br>
-	 * see page 2909 part 2.1.2 in the article for the building of the
-	 * transformation matrix.
-	 * 
-	 * @param yaw
-	 *            - the measured yaw angle
-	 * @param roll
-	 *            - the measured roll angle
-	 * @param pitch
-	 *            - the measured pitch angle
-	 * @return - The transformation matrix to transform measurements from the
-	 *         body frame to the navigation frame
-	 */
-	public static RealMatrix getTransformationMatrix(double yaw, double roll, double pitch) {
-		RealMatrix result = new Array2DRowRealMatrix(3, 3);
-
-		// defining variables for the sine and cosine results of the angles
-		double cosRoll = Math.cos(roll);
-		double cosYaw = Math.cos(yaw);
-		double cosPitch = Math.cos(pitch);
-
-		double sinRoll = Math.sin(roll);
-		double sinYaw = Math.sin(yaw);
-		double sinPitch = Math.sin(pitch);
-
-		// calculating each value of the matrix
-		result.setEntry(0, 0, cosYaw * cosPitch);
-		result.setEntry(0, 1, cosYaw * sinPitch * sinRoll - cosYaw * sinRoll);
-		result.setEntry(0, 2, cosYaw * sinPitch * cosRoll + sinYaw * sinRoll);
-
-		result.setEntry(1, 0, sinYaw * cosPitch);
-		result.setEntry(1, 1, sinYaw * sinPitch * sinRoll + cosYaw * cosRoll);
-		result.setEntry(1, 2, sinYaw * sinPitch * cosRoll - cosYaw * sinRoll);
-
-		result.setEntry(2, 0, -sinPitch);
-		result.setEntry(2, 1, cosPitch * sinRoll);
-		result.setEntry(2, 2, cosPitch * cosRoll);
-
-		return result;
-	}
 
 	/**
-	 * This method returns the unit matrix (also called "Identity Matrix").
-	 * </br>
+	 * This method returns the unit matrix (also called "Identity Matrix"). </br>
 	 * To learn more about the unit matrix, see
-	 * <a href="https://en.wikipedia.org/wiki/Identity_matrix">The Unit
-	 * Matrix</a>
+	 * <a href="https://en.wikipedia.org/wiki/Identity_matrix">The Unit Matrix</a>
 	 * 
 	 * @param size
 	 *            - the size (number of rows and columns) of the unit matrix
@@ -78,9 +31,16 @@ public class Utils {
 		return result;
 	}
 
-	// TODO - fill it with coding stuff
-	public static RealMatrix get0Matrix() {
-		return null;
+	/**
+	 * returns the zero square matrix with a given size.
+	 * 
+	 * @param size
+	 *            the size of the wanted zero matrix.
+	 * @return the zero matrix with the given size.
+	 */
+	//TODO - change name
+	public static RealMatrix get0Matrix(int size) {
+		return new Array2DRowRealMatrix(size, size);
 	}
 
 	public static RealMatrix getDiagonalMatrix(RealVector values) {
@@ -98,23 +58,22 @@ public class Utils {
 	 * 
 	 * @param vector
 	 *            the vector which should be squared
-	 * @return a vector, containing the squares of the elements in the given
-	 *         vector
+	 * @return a vector, containing the squares of the elements in the given vector
 	 */
 	public static RealVector getSquared(RealVector vector) {
 		return vector.ebeMultiply(vector);
 	}
 
 	/**
-	 * This method receives a vector presented in the polar form (norm and
-	 * argument) and return the cartesian form of this vector (the X component
-	 * and the Y component)
+	 * This method receives a vector presented in the polar form (norm and argument)
+	 * and return the cartesian form of this vector (the X component and the Y
+	 * component)
 	 * 
 	 * @param norm
 	 *            the vector's length
 	 * @param argument
-	 *            the argument of the vector (the argument between the vector
-	 *            and the X axis).
+	 *            the argument of the vector (the argument between the vector and
+	 *            the X axis).
 	 * @return a point representing the the vector by its X and Y component (the
 	 *         cartesian form of the vector) in that order: (X,Y)
 	 */
@@ -147,8 +106,8 @@ public class Utils {
 	}
 
 	/**
-	 * uses the cosine law to return the third side of a triangle, knowing the
-	 * two other sides and the angle between them
+	 * uses the cosine law to return the third side of a triangle, knowing the two
+	 * other sides and the angle between them
 	 * 
 	 * @param side1
 	 *            one side of a triangle

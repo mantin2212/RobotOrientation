@@ -34,4 +34,8 @@ public class AnglesUnit {
 		return initialState;
 	}
 
+	public Orientation3D getCurrentState() {
+		return initialState.getRelativeOrientation(getYaw(), getPitch(), getRoll());
+	}
+
 }
