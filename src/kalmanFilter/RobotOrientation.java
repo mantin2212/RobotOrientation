@@ -26,7 +26,6 @@ public class RobotOrientation {
 
 	AccelerationsUnit accelerationsUnit;
 	PrincipalAxesUnit anglesUnit;
-	OdometryUnit odometryUnit;
 
 	private OdometryHandler odometryHandler;
 
@@ -38,8 +37,8 @@ public class RobotOrientation {
 	public RobotOrientation(AccelerationsUnit accUnit, PrincipalAxesUnit anglesUnit, OdometryUnit odometryUnit) {
 		this.accelerationsUnit = accUnit;
 		this.anglesUnit = anglesUnit;
-		this.odometryUnit = odometryUnit;
-
+		
+		this.odometryHandler = new OdometryHandler(odometryUnit);
 	}
 
 	// TODO - maybe find a better name for the variable getRelativeTime
