@@ -31,9 +31,15 @@ public class Utils {
 		return result;
 	}
 
-	// TODO - fill it with coding stuff
-	public static RealMatrix get0Matrix() {
-		return null;
+	/**
+	 * returns the zero square matrix with a given size.
+	 * 
+	 * @param size
+	 *            the size of the wanted zero matrix.
+	 * @return the zero matrix with the given size.
+	 */
+	public static RealMatrix get0Matrix(int size) {
+		return new Array2DRowRealMatrix(size, size);
 	}
 
 	public static RealMatrix getDiagonalMatrix(RealVector values) {
