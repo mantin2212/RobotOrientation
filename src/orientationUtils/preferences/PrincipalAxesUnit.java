@@ -14,16 +14,16 @@ public class PrincipalAxesUnit {
 		this.pitch = pitch;
 	}
 
-	public Supplier<Double> getYaw() {
-		return yaw;
+	public double getYaw() {
+		return yaw.get();
 	}
 
-	public Supplier<Double> getPitch() {
-		return pitch;
+	public double getPitch() {
+		return pitch.get();
 	}
 
-	public Supplier<Double> getRoll() {
-		return roll;
+	public double getRoll() {
+		return roll.get();
 	}
 
 }
