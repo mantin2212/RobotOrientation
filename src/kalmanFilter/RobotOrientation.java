@@ -28,7 +28,7 @@ public class RobotOrientation {
 	private AnglesUnit anglesUnit;
 
 	private OdometryHandler odometryHandler;
-	private MeasurementHandler measurementHandler;
+	private AnglesConvertor measurementHandler;
 
 	private KalmanFilter movementFilter;
 	private Point3D position;
@@ -39,7 +39,7 @@ public class RobotOrientation {
 		this.accelerationsUnit = accUnit;
 		this.anglesUnit = anglesUnit;
 
-		this.measurementHandler = new MeasurementHandler(anglesUnit);
+		this.measurementHandler = new AnglesConvertor(anglesUnit);
 		this.odometryHandler = new OdometryHandler(odometryUnit);
 	}
 

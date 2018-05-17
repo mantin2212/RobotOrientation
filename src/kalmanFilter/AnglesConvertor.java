@@ -12,13 +12,13 @@ import orientationUtils.Orientation3D;
 import orientationUtils.Utils;
 import orientationUtils.preferences.AnglesUnit;
 
-public class MeasurementHandler implements Function<RealVector, RealVector> {
+public class AnglesConvertor implements Function<RealVector, RealVector> {
 
 	private AnglesUnit anglesUnit;
 
 	private RealVector biases;
 
-	public MeasurementHandler(AnglesUnit anglesUnit, RealVector biases) {
+	public AnglesConvertor(AnglesUnit anglesUnit, RealVector biases) {
 
 		this.anglesUnit = anglesUnit;
 
@@ -28,7 +28,7 @@ public class MeasurementHandler implements Function<RealVector, RealVector> {
 			throw new IllegalArgumentException("the biases' vector should have 3 elements");
 	}
 
-	public MeasurementHandler(AnglesUnit anglesUnit) {
+	public AnglesConvertor(AnglesUnit anglesUnit) {
 		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
