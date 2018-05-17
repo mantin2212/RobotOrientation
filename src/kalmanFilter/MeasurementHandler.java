@@ -10,24 +10,20 @@ import org.apache.commons.math3.linear.RealVector;
 
 import orientationUtils.Orientation3D;
 import orientationUtils.Utils;
+import orientationUtils.preferences.AnglesUnit;
 
 public class MeasurementHandler implements Function<RealVector, RealVector> {
 
 	private Orientation3D initialState;
 
-	private Supplier<Double> getYaw;
-	private Supplier<Double> getPitch;
-	private Supplier<Double> getRoll;
+	private AnglesUnit anglesUnit;
 
 	private RealVector biases;
 
-	public MeasurementHandler(Orientation3D initialState, Supplier<Double> getYaw, Supplier<Double> getPitch,
-			Supplier<Double> getRoll, RealVector biases) {
+	public MeasurementHandler(Orientation3D initialState, AnglesUnit anglesUnit, RealVector biases) {
 		this.initialState = initialState;
 
-		this.getPitch = getPitch;
-		this.getYaw = getYaw;
-		this.getRoll = getRoll;
+		this.anglesUnit = anglesUnit;
 
 		if (biases.getDimension() == 3)
 			this.biases = biases;
@@ -35,16 +31,15 @@ public class MeasurementHandler implements Function<RealVector, RealVector> {
 			throw new IllegalArgumentException("the biases' vector should have 3 elements");
 	}
 
-	public MeasurementHandler(Orientation3D initialState, Supplier<Double> getYaw, Supplier<Double> getPitch,
-			Supplier<Double> getRoll) {
-		this(initialState, getYaw, getPitch, getRoll, new ArrayRealVector(new double[] { 0, 0, 0 }));
+	public MeasurementHandler(Orientation3D initialState, AnglesUnit anglesUnit) {
+		this(initialState, anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
 	private RealVector toNavigationFrame(RealVector vector) {
 		// calculating the current orientation angles
-		double yaw = initialState.getYaw() + getYaw.get();
-		double pitch = initialState.getPitch() + getPitch.get();
-		double roll = initialState.getRoll() + getRoll.get();
+		double yaw = initialState.getYaw() + anglesUnit.getYaw();
+		double pitch = initialState.getPitch() + anglesUnit.getPitch();
+		double roll = initialState.getRoll() + anglesUnit.getRoll();
 
 		RealMatrix transformation = Utils.getTransformationMatrix(yaw, roll, pitch);
 		return transformation.preMultiply(vector);
