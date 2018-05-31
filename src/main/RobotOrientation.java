@@ -1,5 +1,5 @@
 // TODO - change package name
-package kalmanFilter;
+package main;
 
 import java.util.function.Supplier;
 
@@ -14,7 +14,6 @@ import org.apache.commons.math3.linear.RealVector;
 
 import errorHandler.ErrorFinder;
 import odometry.OdometryHandler;
-import orientationUtils.Orientation3D;
 import orientationUtils.OrientationConstants;
 import orientationUtils.Point3D;
 import orientationUtils.RelativeDataSupplier;
@@ -36,8 +35,9 @@ public class RobotOrientation {
 
 	private RelativeDataSupplier timeController;
 
+	// TODO - maybe find a better name for the variable getRelativeTime
 	public RobotOrientation(AccelerationsUnit accUnit, AnglesUnit anglesUnit, OdometryUnit odometryUnit,
-			Point3D initialPosition, Orientation3D initialOrientation, Supplier<Double> getRelativeTime) {
+			Point3D initialPosition, Supplier<Double> getRelativeTime) {
 		this.accelerationsUnit = accUnit;
 
 		this.measurementHandler = new MeasurementFixer(anglesUnit);
@@ -48,7 +48,6 @@ public class RobotOrientation {
 
 	}
 
-	// TODO - maybe find a better name for the variable getRelativeTime
 	public void addErrorFinder(ErrorFinder errorFinder) {
 		// build kalman filter
 		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });

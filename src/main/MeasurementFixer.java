@@ -1,5 +1,5 @@
 // TODO - change package name
-package kalmanFilter;
+package main;
 
 import java.util.function.Function;
 
