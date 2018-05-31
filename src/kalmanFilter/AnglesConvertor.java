@@ -78,25 +78,13 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
-	/**
-	 * converts a given vector from the body frame to the navigation frame, using
-	 * the current orientation of the robot.
-	 * 
-	 * @param vector
-	 *            the vector, in the robot's body frame.
-	 * @return the given vector, in navigation frame.
-	 */
-	private RealVector toNavigationFrame(RealVector vector) {
-		RealMatrix transformation = anglesUnit.getCurrentState().getTransformationMatrix();
-		return transformation.preMultiply(vector);
-	}
 
 	@Override
-	public RealVector apply(RealVector measurement) {
+	public RealVector apply(RealVector accMeasurementsVector) {
 		/*
 		 * neutralizing the sensor biases and rotating the measurement according to the
 		 * robot's orientation
 		 */
-		return toNavigationFrame(measurement.subtract(biases));
+		return anglesUnit.getCurrentState().toNavigationFrame(accMeasurementsVector.subtract(biases));
 	}
 }
