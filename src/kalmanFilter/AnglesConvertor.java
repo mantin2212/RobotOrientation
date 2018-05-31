@@ -4,7 +4,6 @@ package kalmanFilter;
 import java.util.function.Function;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import orientationUtils.Orientation3D;
@@ -40,8 +39,8 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	private RealVector biases;
 
 	/**
-	 * creates a new {@link AnglesConvertor} object, with a given {@link AnglesUnit}
-	 * and the biases vector of the measuring sensors
+	 * creates a new {@link AnglesConvertor} object, with a given
+	 * {@link AnglesUnit} and the biases vector of the measuring sensors
 	 * 
 	 * @param anglesUnit
 	 *            the angles unit used to follow the robot's angles
@@ -64,8 +63,8 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	}
 
 	/**
-	 * creates a new {@link AnglesConvertor} object, with a given {@link AnglesUnit}
-	 * and a biases vector set to 0.
+	 * creates a new {@link AnglesConvertor} object, with a given
+	 * {@link AnglesUnit} and a biases vector set to 0.
 	 * 
 	 * @param anglesUnit
 	 *            the angles unit used to follow the robot's angles
@@ -78,12 +77,11 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
-
 	@Override
 	public RealVector apply(RealVector accMeasurementsVector) {
 		/*
-		 * neutralizing the sensor biases and rotating the measurement according to the
-		 * robot's orientation
+		 * neutralizing the sensor biases and rotating the measurement according
+		 * to the robot's orientation
 		 */
 		return anglesUnit.getCurrentState().toNavigationFrame(accMeasurementsVector.subtract(biases));
 	}

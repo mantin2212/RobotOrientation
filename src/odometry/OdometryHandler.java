@@ -1,7 +1,5 @@
 package odometry;
 
-import java.util.function.Supplier;
-
 import orientationUtils.Utils;
 import orientationUtils.preferences.OdometryUnit;
 import utils.Point;
