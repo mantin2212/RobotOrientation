@@ -27,7 +27,6 @@ import utils.Point;
 public class RobotOrientation {
 
 	private AccelerationsUnit accelerationsUnit;
-	private AnglesUnit anglesUnit;
 
 	private OdometryHandler odometryHandler;
 	private AnglesConvertor measurementHandler;
@@ -37,22 +36,20 @@ public class RobotOrientation {
 
 	private RelativeDataSupplier timeController;
 
-	public RobotOrientation(AccelerationsUnit accUnit, AnglesUnit anglesUnit, OdometryUnit odometryUnit) {
+	public RobotOrientation(AccelerationsUnit accUnit, AnglesUnit anglesUnit, OdometryUnit odometryUnit,
+			Point3D initialPosition, Orientation3D initialOrientation, Supplier<Double> getRelativeTime) {
 		this.accelerationsUnit = accUnit;
-		this.anglesUnit = anglesUnit;
 
 		this.measurementHandler = new AnglesConvertor(anglesUnit);
 		this.odometryHandler = new OdometryHandler(odometryUnit);
-	}
-
-	// TODO - maybe find a better name for the variable getRelativeTime
-	public void initialize(ErrorFinder errorFinder, Point3D initialPosition, Orientation3D initialOrientation,
-			Supplier<Double> getRelativeTime) {
+		
 		this.timeController = new RelativeDataSupplier(getRelativeTime);
 		this.position = initialPosition;
-		/*
-		 * handle the biases (use getBiasVector from errorFinder somewhere somehow)
-		 */
+	
+	}
+	
+	// TODO - maybe find a better name for the variable getRelativeTime
+	public void addErrorFinder(ErrorFinder errorFinder) {
 		// build kalman filter
 		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
 		RealMatrix processNoise = Utils.getDiagonalMatrix(errorFinder.getVarianceVector());
@@ -71,11 +68,11 @@ public class RobotOrientation {
 		double dt = timeController.get();
 
 		/*
-		 * calculating the velocity measurement by using: v = P/dt, when P is the
-		 * robot's displacement vector between two points and dt is the time passed
-		 * between these points
+		 * calculating the velocity measurement by using: v = P/dt, when P is
+		 * the robot's displacement vector between two points and dt is the time
+		 * passed between these points
 		 */
-		Point measurement = odometryHandler.getDifference(anglesUnit.getCurrentState().getYaw());
+		Point measurement = odometryHandler.getDifference();
 		RealVector measurementVector = new ArrayRealVector(
 				new double[] { measurement.getX() / dt, measurement.getY() / dt });
 

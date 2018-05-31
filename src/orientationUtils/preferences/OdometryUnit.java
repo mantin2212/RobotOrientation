@@ -16,11 +16,15 @@ public class OdometryUnit {
 	// the width of the robot
 	private double robotWidth;
 
-	public OdometryUnit(Supplier<Double> leftEncoder, Supplier<Double> rightEncoder, double robotWidth) {
+	private Supplier<Double> yawSupplier;
+
+	public OdometryUnit(Supplier<Double> leftEncoder, Supplier<Double> rightEncoder, double robotWidth,
+			Supplier<Double> yawSupplier) {
 		// creating the encoders' data handlers using the suppliers
 		this.leftDistanceSupplier = new RelativeDataSupplier(leftEncoder);
 		this.rightDistanceSupplier = new RelativeDataSupplier(rightEncoder);
 		this.robotWidth = robotWidth;
+
 	}
 
 	public double getLeftDistance() {
@@ -33,5 +37,9 @@ public class OdometryUnit {
 
 	public double getRobotWidth() {
 		return robotWidth;
+	}
+
+	public double getYaw() {
+		return yawSupplier.get();
 	}
 }
