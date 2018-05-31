@@ -18,7 +18,8 @@ class BiasFinder {
 	private int measurementNumber = 0;
 
 	/**
-	 * creates a new {@link BiasFinder} object, with a default result sum (0 vector)
+	 * creates a new {@link BiasFinder} object, with a default result sum (0
+	 * vector)
 	 * 
 	 * @param measurementVectorSize
 	 *            the number of devices
@@ -52,14 +53,15 @@ class BiasFinder {
 	 * @return the average difference between the measurements to the expected
 	 *         measurement vector
 	 */
-	// TODO - change name to getBiasVector
-	public RealVector getErrorVector(RealVector expected) {
+	public RealVector getBiasVector(double... expected) {
+
+		RealVector expectedVector = new ArrayRealVector(expected);
 		/*
-		 * calculating the average bias using: bias = Sm/n-e, when: Sm- the sum of the
-		 * measurements, n- the number of measurements, and e- the expected state the
-		 * sensors should measure
+		 * calculating the average bias using: bias = Sm/n-e, when: Sm- the sum
+		 * of the measurements, n- the number of measurements, and e- the
+		 * expected state the sensors should measure
 		 */
-		RealVector errorAvg = meaesurementSumVector.mapDivide(measurementNumber).subtract(expected);
+		RealVector errorAvg = meaesurementSumVector.mapDivide(measurementNumber).subtract(expectedVector);
 
 		return errorAvg;
 	}
