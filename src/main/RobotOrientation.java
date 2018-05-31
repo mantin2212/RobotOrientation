@@ -49,7 +49,7 @@ public class RobotOrientation {
 
 	public void addErrorFinder(ErrorFinder errorFinder) {
 		// build kalman filter
-		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
+		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0 });
 		RealMatrix processNoise = Utils.getDiagonalMatrix(errorFinder.getVarianceVector());
 		RealMatrix measurmentNoise = Utils.get0Matrix(2);
 
@@ -92,14 +92,12 @@ public class RobotOrientation {
 		// dividing the velocity vector into x,y,z values.
 		double velocityX = velocity.getEntry(0);
 		double velocityY = velocity.getEntry(1);
-		double velocityZ = velocity.getEntry(2);
 
 		// moving the robot's position according to d = vt.
-		position.move(dt * velocityX, dt * velocityY, dt * velocityZ);
+		position.move(dt * velocityX, dt * velocityY, 0);
 	}
 
 	public Point3D getPosition() {
 		return position;
 	}
-
 }
