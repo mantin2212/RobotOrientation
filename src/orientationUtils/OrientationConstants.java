@@ -13,12 +13,12 @@ import org.apache.commons.math3.linear.RealMatrix;
 public class OrientationConstants {
 	public static class KalmanFilterMatrices {
 		// A - The state transition matrix
-		public static final RealMatrix A_MATRIX = Utils.getUnitMatrix(3);
+		public static final RealMatrix A_MATRIX = Utils.getUnitMatrix(2);
 
 		// B - the control input matrix
-		public static final RealMatrix B_MATRIX = Utils.getUnitMatrix(3);
+		public static final RealMatrix B_MATRIX = Utils.getUnitMatrix(2);
 
 		// H - the measurement matrix
-		public static final RealMatrix H_MATRIX = Utils.getUnitMatrix(3);
+		public static final RealMatrix H_MATRIX = Utils.getUnitMatrix(2);
 	}
 }
