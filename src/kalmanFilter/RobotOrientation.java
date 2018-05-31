@@ -42,12 +42,12 @@ public class RobotOrientation {
 
 		this.measurementHandler = new MeasurementFixer(anglesUnit);
 		this.odometryHandler = new OdometryHandler(odometryUnit);
-		
+
 		this.timeController = new RelativeDataSupplier(getRelativeTime);
 		this.position = initialPosition;
-	
+
 	}
-	
+
 	// TODO - maybe find a better name for the variable getRelativeTime
 	public void addErrorFinder(ErrorFinder errorFinder) {
 		// build kalman filter
@@ -61,6 +61,11 @@ public class RobotOrientation {
 				OrientationConstants.KalmanFilterMatrices.H_MATRIX, measurmentNoise);
 
 		movementFilter = new KalmanFilter(processModel, measurementModel);
+	}
+
+	public void start() {
+		// initializes the time controller
+		timeController.initData();
 	}
 
 	public void update() {

@@ -52,6 +52,11 @@ public class RelativeDataSupplier implements Supplier<Double> {
 	 */
 	public RelativeDataSupplier(Supplier<Double> ValueSupplier) {
 		this.valueSupplier = ValueSupplier;
+
+		initData();
+	}
+
+	public void initData() {
 		lastValue = valueSupplier.get();
 	}
 
