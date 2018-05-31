@@ -29,7 +29,7 @@ public class RobotOrientation {
 	private AccelerationsUnit accelerationsUnit;
 
 	private OdometryHandler odometryHandler;
-	private AnglesConvertor measurementHandler;
+	private MeasurementFixer measurementHandler;
 
 	private KalmanFilter movementFilter;
 	private Point3D position;
@@ -40,7 +40,7 @@ public class RobotOrientation {
 			Point3D initialPosition, Orientation3D initialOrientation, Supplier<Double> getRelativeTime) {
 		this.accelerationsUnit = accUnit;
 
-		this.measurementHandler = new AnglesConvertor(anglesUnit);
+		this.measurementHandler = new MeasurementFixer(anglesUnit);
 		this.odometryHandler = new OdometryHandler(odometryUnit);
 		
 		this.timeController = new RelativeDataSupplier(getRelativeTime);

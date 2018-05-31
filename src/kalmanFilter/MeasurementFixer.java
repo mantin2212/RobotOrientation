@@ -32,14 +32,14 @@ import orientationUtils.preferences.AnglesUnit;
  * @author noam mantin
  *
  */
-public class AnglesConvertor implements Function<RealVector, RealVector> {
+public class MeasurementFixer implements Function<RealVector, RealVector> {
 
 	private AnglesUnit anglesUnit;
 
 	private RealVector biases;
 
 	/**
-	 * creates a new {@link AnglesConvertor} object, with a given
+	 * creates a new {@link MeasurementFixer} object, with a given
 	 * {@link AnglesUnit} and the biases vector of the measuring sensors
 	 * 
 	 * @param anglesUnit
@@ -53,7 +53,7 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	 *             if the biases vector doesn't have the correct size (3), an
 	 *             exception is thrown.
 	 */
-	public AnglesConvertor(AnglesUnit anglesUnit, RealVector biases) {
+	public MeasurementFixer(AnglesUnit anglesUnit, RealVector biases) {
 		this.anglesUnit = anglesUnit;
 
 		if (biases.getDimension() == 3)
@@ -63,7 +63,7 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	}
 
 	/**
-	 * creates a new {@link AnglesConvertor} object, with a given
+	 * creates a new {@link MeasurementFixer} object, with a given
 	 * {@link AnglesUnit} and a biases vector set to 0.
 	 * 
 	 * @param anglesUnit
@@ -73,7 +73,7 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	 *             if the biases vector doesn't have the correct size (3), an
 	 *             exception is thrown.
 	 */
-	public AnglesConvertor(AnglesUnit anglesUnit) {
+	public MeasurementFixer(AnglesUnit anglesUnit) {
 		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
