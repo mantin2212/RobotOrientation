@@ -2,7 +2,7 @@ package orientationUtils;
 
 import java.util.function.Supplier;
 
-import kalmanFilter.RobotOrientation;
+import main.RobotOrientation;
 
 /**
  * This class represents an object with a changing value. </br>
@@ -45,13 +45,22 @@ public class RelativeDataSupplier implements Supplier<Double> {
 	 * difference between two values provided by the ValueSupplier parameter
 	 * using the {@link #get()} method.
 	 * 
-	 * @param ValueSupplier
+	 * @param valueSupplier
 	 *            - The {@link Supplier} providing the measured values.
 	 * 
 	 * @see Supplier
 	 */
-	public RelativeDataSupplier(Supplier<Double> ValueSupplier) {
-		this.valueSupplier = ValueSupplier;
+	public RelativeDataSupplier(Supplier<Double> valueSupplier) {
+		this.valueSupplier = valueSupplier;
+
+		initData();
+	}
+
+	public static RelativeDataSupplier fromIntegerSupplier(Supplier<Integer> valueSupplier) {
+		return new RelativeDataSupplier(() -> (double) (valueSupplier.get()));
+	}
+
+	public void initData() {
 		lastValue = valueSupplier.get();
 	}
 

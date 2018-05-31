@@ -1,5 +1,4 @@
-// TODO - change package name
-package kalmanFilter;
+package main;
 
 import java.util.function.Supplier;
 
@@ -14,7 +13,6 @@ import org.apache.commons.math3.linear.RealVector;
 
 import errorHandler.ErrorFinder;
 import odometry.OdometryHandler;
-import orientationUtils.Orientation3D;
 import orientationUtils.OrientationConstants;
 import orientationUtils.Point3D;
 import orientationUtils.RelativeDataSupplier;
@@ -27,32 +25,29 @@ import utils.Point;
 public class RobotOrientation {
 
 	private AccelerationsUnit accelerationsUnit;
-	private AnglesUnit anglesUnit;
 
 	private OdometryHandler odometryHandler;
-	private AnglesConvertor measurementHandler;
+	private MeasurementFixer measurementHandler;
 
 	private KalmanFilter movementFilter;
 	private Point3D position;
 
 	private RelativeDataSupplier timeController;
 
-	public RobotOrientation(AccelerationsUnit accUnit, AnglesUnit anglesUnit, OdometryUnit odometryUnit) {
-		this.accelerationsUnit = accUnit;
-		this.anglesUnit = anglesUnit;
-
-		this.measurementHandler = new AnglesConvertor(anglesUnit);
-		this.odometryHandler = new OdometryHandler(odometryUnit);
-	}
-
 	// TODO - maybe find a better name for the variable getRelativeTime
-	public void initialize(ErrorFinder errorFinder, Point3D initialPosition, Orientation3D initialOrientation,
-			Supplier<Double> getRelativeTime) {
+	public RobotOrientation(AccelerationsUnit accUnit, AnglesUnit anglesUnit, OdometryUnit odometryUnit,
+			Point3D initialPosition, Supplier<Double> getRelativeTime) {
+		this.accelerationsUnit = accUnit;
+
+		this.measurementHandler = new MeasurementFixer(anglesUnit);
+		this.odometryHandler = new OdometryHandler(odometryUnit);
+
 		this.timeController = new RelativeDataSupplier(getRelativeTime);
 		this.position = initialPosition;
-		/*
-		 * handle the biases (use getBiasVector from errorFinder somewhere somehow)
-		 */
+
+	}
+
+	public void addErrorFinder(ErrorFinder errorFinder) {
 		// build kalman filter
 		RealVector initialStateEstimate = new ArrayRealVector(new Double[] { 0.0, 0.0, 0.0 });
 		RealMatrix processNoise = Utils.getDiagonalMatrix(errorFinder.getVarianceVector());
@@ -66,16 +61,21 @@ public class RobotOrientation {
 		movementFilter = new KalmanFilter(processModel, measurementModel);
 	}
 
+	public void start() {
+		// initializes the time controller
+		timeController.initData();
+	}
+
 	public void update() {
 		// getting the time difference
 		double dt = timeController.get();
 
 		/*
-		 * calculating the velocity measurement by using: v = P/dt, when P is the
-		 * robot's displacement vector between two points and dt is the time passed
-		 * between these points
+		 * calculating the velocity measurement by using: v = P/dt, when P is
+		 * the robot's displacement vector between two points and dt is the time
+		 * passed between these points
 		 */
-		Point measurement = odometryHandler.getDifference(anglesUnit.getYaw());
+		Point measurement = odometryHandler.getDifference();
 		RealVector measurementVector = new ArrayRealVector(
 				new double[] { measurement.getX() / dt, measurement.getY() / dt });
 

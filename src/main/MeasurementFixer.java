@@ -1,10 +1,9 @@
 // TODO - change package name
-package kalmanFilter;
+package main;
 
 import java.util.function.Function;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import orientationUtils.Orientation3D;
@@ -33,15 +32,15 @@ import orientationUtils.preferences.AnglesUnit;
  * @author noam mantin
  *
  */
-public class AnglesConvertor implements Function<RealVector, RealVector> {
+public class MeasurementFixer implements Function<RealVector, RealVector> {
 
 	private AnglesUnit anglesUnit;
 
 	private RealVector biases;
 
 	/**
-	 * creates a new {@link AnglesConvertor} object, with a given {@link AnglesUnit}
-	 * and the biases vector of the measuring sensors
+	 * creates a new {@link MeasurementFixer} object, with a given
+	 * {@link AnglesUnit} and the biases vector of the measuring sensors
 	 * 
 	 * @param anglesUnit
 	 *            the angles unit used to follow the robot's angles
@@ -54,7 +53,7 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	 *             if the biases vector doesn't have the correct size (3), an
 	 *             exception is thrown.
 	 */
-	public AnglesConvertor(AnglesUnit anglesUnit, RealVector biases) {
+	public MeasurementFixer(AnglesUnit anglesUnit, RealVector biases) {
 		this.anglesUnit = anglesUnit;
 
 		if (biases.getDimension() == 3)
@@ -64,8 +63,8 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	}
 
 	/**
-	 * creates a new {@link AnglesConvertor} object, with a given {@link AnglesUnit}
-	 * and a biases vector set to 0.
+	 * creates a new {@link MeasurementFixer} object, with a given
+	 * {@link AnglesUnit} and a biases vector set to 0.
 	 * 
 	 * @param anglesUnit
 	 *            the angles unit used to follow the robot's angles
@@ -74,29 +73,16 @@ public class AnglesConvertor implements Function<RealVector, RealVector> {
 	 *             if the biases vector doesn't have the correct size (3), an
 	 *             exception is thrown.
 	 */
-	public AnglesConvertor(AnglesUnit anglesUnit) {
+	public MeasurementFixer(AnglesUnit anglesUnit) {
 		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
 	}
 
-	/**
-	 * converts a given vector from the body frame to the navigation frame, using
-	 * the current orientation of the robot.
-	 * 
-	 * @param vector
-	 *            the vector, in the robot's body frame.
-	 * @return the given vector, in navigation frame.
-	 */
-	private RealVector toNavigationFrame(RealVector vector) {
-		RealMatrix transformation = anglesUnit.getCurrentState().getTransformationMatrix();
-		return transformation.preMultiply(vector);
-	}
-
 	@Override
-	public RealVector apply(RealVector measurement) {
+	public RealVector apply(RealVector accMeasurementsVector) {
 		/*
-		 * neutralizing the sensor biases and rotating the measurement according to the
-		 * robot's orientation
+		 * neutralizing the sensor biases and rotating the measurement according
+		 * to the robot's orientation
 		 */
-		return toNavigationFrame(measurement.subtract(biases));
+		return anglesUnit.getCurrentState().toNavigationFrame(accMeasurementsVector.subtract(biases));
 	}
 }

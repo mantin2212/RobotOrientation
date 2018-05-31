@@ -2,6 +2,7 @@ package orientationUtils;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 
 public class Orientation3D {
 
@@ -30,6 +31,19 @@ public class Orientation3D {
 	public Orientation3D getRelativeOrientation(double dYaw, double dPitch, double dRoll) {
 		return new Orientation3D(yaw + dYaw, roll + dRoll, pitch + dPitch);
 	}
+	
+	/**
+	 * converts a given vector from the body frame to the navigation frame, using
+	 * the current orientation of the robot.
+	 * 
+	 * @param vector
+	 *            the vector, in the robot's body frame.
+	 * @return the given vector, in navigation frame.
+	 */
+	public RealVector toNavigationFrame(RealVector vector) {
+		RealMatrix transformation = this.getTransformationMatrix();
+		return transformation.preMultiply(vector);
+	}
 
 	/**
 	 * This method returns the transformation matrix to transform measurements from
@@ -43,7 +57,7 @@ public class Orientation3D {
 	 * @return - The transformation matrix to transform measurements from the body
 	 *         frame to the navigation frame
 	 */
-	public RealMatrix getTransformationMatrix() {
+	private RealMatrix getTransformationMatrix() {
 		RealMatrix result = new Array2DRowRealMatrix(3, 3);
 
 		// defining variables for the sine and cosine results of the angles

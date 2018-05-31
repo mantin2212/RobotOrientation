@@ -41,6 +41,7 @@ public class ErrorFinder {
 		biasFinder = new BiasFinder(VectorSize);
 		varianceFinder = new VarianceFinder(VectorSize);
 	}
+
 	/**
 	 * adds a given measurement to the analyzation
 	 * 
@@ -51,8 +52,10 @@ public class ErrorFinder {
 		biasFinder.addMeasurement(measurement);
 		varianceFinder.addResultVector(measurement);
 	}
+
 	/**
-	 * returns the bias vector of the sensors, according to a given expected vector
+	 * returns the bias vector of the sensors, according to a given expected
+	 * vector
 	 * 
 	 * @param expectedVector
 	 *            the expected measurement vector in the current state,.
@@ -60,9 +63,10 @@ public class ErrorFinder {
 	 *         expected measurement
 	 * @see BiasFinder
 	 */
-	public RealVector getBiasVector(RealVector expectedValuesVector) {
-		return biasFinder.getErrorVector(expectedValuesVector);
+	public RealVector getBiasVector(double... expected) {
+		return biasFinder.getBiasVector(expected);
 	}
+
 	/**
 	 * calculates and returns the variance vector of the sensors.
 	 * 
