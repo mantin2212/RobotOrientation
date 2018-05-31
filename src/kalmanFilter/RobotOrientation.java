@@ -75,7 +75,7 @@ public class RobotOrientation {
 		 * robot's displacement vector between two points and dt is the time passed
 		 * between these points
 		 */
-		Point measurement = odometryHandler.getDifference(anglesUnit.getYaw());
+		Point measurement = odometryHandler.getDifference(anglesUnit.getCurrentState().getYaw());
 		RealVector measurementVector = new ArrayRealVector(
 				new double[] { measurement.getX() / dt, measurement.getY() / dt });
 

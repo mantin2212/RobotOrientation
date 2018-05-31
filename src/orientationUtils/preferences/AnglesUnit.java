@@ -16,14 +16,14 @@ public class AnglesUnit {
 	 * orientation, angle suppliers and sensors biases.
 	 * 
 	 * @param yaw
-	 *            should supply the robot's yaw angle, compared to the initial yaw
-	 *            angle.
+	 *            should supply the robot's yaw angle, compared to the initial
+	 *            yaw angle.
 	 * @param pitch
 	 *            should supply the robot's pitch angle, compared to the initial
 	 *            pitch angle.
 	 * @param roll
-	 *            should supply the robot's roll angle, compared to the initial roll
-	 *            angle.
+	 *            should supply the robot's roll angle, compared to the initial
+	 *            roll angle.
 	 * @param initialState
 	 *            the initial orientation of the robot.
 	 * 
@@ -35,23 +35,11 @@ public class AnglesUnit {
 		this.initialState = initialState;
 	}
 
-	public double getYaw() {
-		return yaw.get();
-	}
-
-	public double getPitch() {
-		return pitch.get();
-	}
-
-	public double getRoll() {
-		return roll.get();
-	}
-
 	public Orientation3D getInitialState() {
 		return initialState;
 	}
 
 	public Orientation3D getCurrentState() {
-		return initialState.getRelativeOrientation(getYaw(), getPitch(), getRoll());
+		return initialState.getRelativeOrientation(yaw.get(), pitch.get(), roll.get());
 	}
 }
