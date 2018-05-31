@@ -1,4 +1,3 @@
-// TODO - change package name
 package main;
 
 import java.util.function.Supplier;
