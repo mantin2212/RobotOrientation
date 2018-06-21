@@ -27,7 +27,7 @@ public class RobotOrientation {
 	private AccelerationsUnit accelerationsUnit;
 
 	private OdometryHandler odometryHandler;
-	private MeasurementFixer measurementHandler;
+	private MeasurementFixer measurementFixer;
 
 	private KalmanFilter movementFilter;
 	private Point3D position;
@@ -39,7 +39,7 @@ public class RobotOrientation {
 			Point3D initialPosition, Supplier<Double> getRelativeTime) {
 		this.accelerationsUnit = accUnit;
 
-		this.measurementHandler = new MeasurementFixer(anglesUnit);
+		this.measurementFixer = new MeasurementFixer(anglesUnit);
 		this.odometryHandler = new OdometryHandler(odometryUnit);
 
 		this.timeController = new RelativeDataSupplier(getRelativeTime);
@@ -80,7 +80,7 @@ public class RobotOrientation {
 				new double[] { measurement.getX() / dt, measurement.getY() / dt });
 
 		// getting the fixed control change from the acceleration unit
-		RealVector controlChanges = measurementHandler.apply(accelerationsUnit.getAcceleration());
+		RealVector controlChanges = measurementFixer.apply(accelerationsUnit.getAcceleration());
 
 		// activating the kalman filter
 		movementFilter.predict(controlChanges);

@@ -56,7 +56,7 @@ public class MeasurementFixer implements Function<RealVector, RealVector> {
 	public MeasurementFixer(AnglesUnit anglesUnit, RealVector biases) {
 		this.anglesUnit = anglesUnit;
 
-		if (biases.getDimension() == 3)
+		if (biases.getDimension() == 2)
 			this.biases = biases;
 		else
 			throw new IllegalArgumentException("the biases' vector should have 3 elements");
@@ -70,11 +70,11 @@ public class MeasurementFixer implements Function<RealVector, RealVector> {
 	 *            the angles unit used to follow the robot's angles
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if the biases vector doesn't have the correct size (3), an
+	 *             if the biases vector doesn't have the correct size (2), an
 	 *             exception is thrown.
 	 */
 	public MeasurementFixer(AnglesUnit anglesUnit) {
-		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0, 0 }));
+		this(anglesUnit, new ArrayRealVector(new double[] { 0, 0 }));
 	}
 
 	@Override
