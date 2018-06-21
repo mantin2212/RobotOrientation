@@ -24,6 +24,7 @@ public class OdometryUnit {
 		this.leftDistanceSupplier = RelativeDataSupplier.fromIntegerSupplier(leftEncoder);
 		this.rightDistanceSupplier = RelativeDataSupplier.fromIntegerSupplier(rightEncoder);
 		this.robotWidth = robotWidth;
+		this.yawSupplier = yawSupplier;
 	}
 
 	public double getLeftDistance() {
