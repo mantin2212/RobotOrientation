@@ -1,6 +1,6 @@
 package odometry;
 
-import utils.Point;
+import java.awt.geom.Point2D;;
 
 /**
  * a class which uses encoders to find the progress of a robot between discrete
@@ -42,7 +42,7 @@ public class OdometryHandler {
 	 *         last call to this method, in the navigation frame.
 	 * 
 	 */
-	public Point getDifference() {
+	public Point2D getDifference() {
 		// getting the yaw angle of the robot in the end of the movement
 		double yaw = Math.toRadians(odometryUnit.getYaw());
 		/*
