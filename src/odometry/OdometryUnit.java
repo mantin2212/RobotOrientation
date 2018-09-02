@@ -1,8 +1,6 @@
-package orientationUtils.preferences;
+package odometry;
 
 import java.util.function.Supplier;
-
-import orientationUtils.RelativeDataSupplier;
 
 public class OdometryUnit {
 	/**

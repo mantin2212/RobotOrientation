@@ -1,8 +1,5 @@
 package odometry;
 
-import orientationUtils.RelativeDataSupplier;
-import orientationUtils.Utils;
-import orientationUtils.preferences.OdometryUnit;
 import utils.Point;
 
 /**
