@@ -18,12 +18,13 @@ public class OdometryUnit {
 
 	private Supplier<Double> yawSupplier;
 
-	public OdometryUnit(Supplier<Integer> leftEncoder, Supplier<Integer> rightEncoder, double robotWidth,
+	public OdometryUnit(Supplier<Double> leftEncoder, Supplier<Double> rightEncoder, double robotWidth,
 			Supplier<Double> yawSupplier) {
 		// creating the encoders' data handlers using the suppliers
-		this.leftDistanceSupplier = RelativeDataSupplier.fromIntegerSupplier(leftEncoder);
-		this.rightDistanceSupplier = RelativeDataSupplier.fromIntegerSupplier(rightEncoder);
+		this.leftDistanceSupplier = new RelativeDataSupplier(leftEncoder);
+		this.rightDistanceSupplier = new RelativeDataSupplier(rightEncoder);
 		this.robotWidth = robotWidth;
+		this.yawSupplier = yawSupplier;
 	}
 
 	public double getLeftDistance() {

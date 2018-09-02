@@ -1,5 +1,6 @@
 package odometry;
 
+import orientationUtils.RelativeDataSupplier;
 import orientationUtils.Utils;
 import orientationUtils.preferences.OdometryUnit;
 import utils.Point;
@@ -15,6 +16,8 @@ public class OdometryHandler {
 
 	private OdometryUnit odometryUnit;
 
+	private RelativeDataSupplier yawDiff;
+
 	/**
 	 * creates a new {@link OdometryHandler} object, with given parameters
 	 * 
@@ -27,6 +30,8 @@ public class OdometryHandler {
 	 */
 	public OdometryHandler(OdometryUnit odometryUnit) {
 		this.odometryUnit = odometryUnit;
+
+		yawDiff = new RelativeDataSupplier(odometryUnit::getYaw);
 	}
 
 	/**
@@ -42,8 +47,7 @@ public class OdometryHandler {
 	 */
 	public Point getDifference() {
 		// getting the yaw angle of the robot in the end of the movement
-		double yaw = odometryUnit.getYaw();
-
+		double yaw = Math.toRadians(odometryUnit.getYaw());
 		/*
 		 * The robot's displacement's norm, i.e the length of the straight line
 		 * starting from the previous center location of the robot and ending in
@@ -63,17 +67,22 @@ public class OdometryHandler {
 		 * calculating the yaw difference using geometry laws. Signified by Δϕ
 		 * in the article. (equation 22)
 		 */
-		double yawDifference = (leftDistance - rightDistance) / odometryUnit.getRobotWidth();
+		double yawDifference = yawDiff
+				.get();/*
+						 * ((leftDistance - rightDistance) /
+						 * odometryUnit.getRobotWidth())
+						 */
 
-		if (rightDistance == leftDistance) {
+		/*
+		 * calculating the length of the arch the middle of the robot has
+		 * passed. Signified in the article as ak (equation 21)
+		 */
+		double distance = (rightDistance + leftDistance) / 2;
+
+		if (yawDifference == 0) {
 			// the robot moved in a straight line
 			centerDistance = rightDistance;
 		} else {
-			/*
-			 * calculating the length of the arch the middle of the robot has
-			 * passed. Signified in the article as ak (equation 21)
-			 */
-			double distance = (rightDistance + leftDistance) / 2;
 			/*
 			 * calculating the rotation radius of the robot's movement.
 			 * Signified by r in the article. (equation 23).
@@ -85,9 +94,12 @@ public class OdometryHandler {
 			 */
 			centerDistance = Utils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
 		}
+
+		if (distance < 0)
+			centerDistance = -centerDistance;
+
 		// finding the argument of the displacement vector.
 		double arg = yaw - 1 / 2 * yawDifference;
-
 		/*
 		 * Building the cartesian displacement vector by an argument (arg) and a
 		 * norm (Δλ).
