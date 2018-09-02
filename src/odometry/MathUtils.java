@@ -7,7 +7,7 @@ import utils.Point;
  * things to be used in the RobotOrientation project
  *
  */
-public class Utils {
+public class MathUtils {
 
 	/**
 	 * This method receives a vector presented in the polar form (norm and

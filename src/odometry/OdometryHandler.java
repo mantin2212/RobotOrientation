@@ -89,7 +89,7 @@ public class OdometryHandler {
 			 * using the cosine law to find the robot's displacement's norm
 			 * (Δλ). (equation 24)
 			 */
-			centerDistance = Utils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
+			centerDistance = MathUtils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
 		}
 
 		if (distance < 0)
@@ -107,6 +107,6 @@ public class OdometryHandler {
 		 * so gives us the robot's position in the navigation system (equation
 		 * 26)
 		 */
-		return Utils.convertPolarToCartesian(centerDistance, arg);
+		return MathUtils.convertPolarToCartesian(centerDistance, arg);
 	}
 }
