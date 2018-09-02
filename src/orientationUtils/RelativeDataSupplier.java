@@ -2,7 +2,6 @@ package orientationUtils;
 
 import java.util.function.Supplier;
 
-import main.RobotOrientation;
 
 /**
  * This class represents an object with a changing value. </br>
