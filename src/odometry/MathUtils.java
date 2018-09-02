@@ -1,6 +1,6 @@
 package odometry;
 
-import utils.Point;
+import java.awt.geom.Point2D;
 
 /**
  * This class contains useful static methods which calculate several important
@@ -22,12 +22,12 @@ public class MathUtils {
 	 * @return a point representing the the vector by its X and Y component (the
 	 *         cartesian form of the vector) in that order: (X,Y)
 	 */
-	public static Point convertPolarToCartesian(double norm, double argument) {
+	public static Point2D convertPolarToCartesian(double norm, double argument) {
 		// calculating the X and Y components
 		double legX = norm * Math.cos(argument);
 		double legY = norm * Math.sin(argument);
 		// returning the result as a point
-		return new Point(legX, legY);
+		return new Point2D.Double(legX, legY);
 	}
 
 	/**
@@ -41,9 +41,9 @@ public class MathUtils {
 	 *         argument (v.arg+angle). The returned vector is represented in the
 	 *         cartesian form (by it's X and Y components) as a point
 	 */
-	public static Point rotateVector(Point vector, double angle) {
+	public static Point2D rotateVector(Point2D vector, double angle) {
 		// calculating the norm and argument of the vector
-		double norm = Point.distance(vector, new Point(0, 0));
+		double norm = vector.distance(new Point2D.Double(0, 0));
 		double argument = Math.atan(vector.getY() / vector.getX());
 
 		// returning a vector with the same size and the new argument
