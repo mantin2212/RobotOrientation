@@ -61,8 +61,7 @@ public class OdometryHandler {
 		double leftDistance = odometryUnit.getLeftDistance();
 
 		/*
-		 * calculating the yaw difference using geometry laws. Signified by Δϕ
-		 * in the article. (equation 22)
+		 * The yaw difference .Signified by Δϕ in the article. (equation 22)
 		 */
 		double yawDifference = yawDiff.get();
 
@@ -70,7 +69,7 @@ public class OdometryHandler {
 		 * calculating the length of the arch the middle of the robot has
 		 * passed. Signified in the article as ak (equation 21)
 		 */
-		double distance = (rightDistance + leftDistance) / 2;
+		double archDistance = (rightDistance + leftDistance) / 2;
 
 		if (yawDifference == 0) {
 			// the robot moved in a straight line
@@ -80,7 +79,7 @@ public class OdometryHandler {
 			 * calculating the rotation radius of the robot's movement.
 			 * Signified by r in the article. (equation 23).
 			 */
-			double rotationRadius = distance / yawDifference;
+			double rotationRadius = archDistance / yawDifference;
 			/*
 			 * using the cosine law to find the robot's displacement's norm
 			 * (Δλ). (equation 24)
@@ -88,7 +87,8 @@ public class OdometryHandler {
 			centerDistance = MathUtils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
 		}
 
-		if (distance < 0)
+		// if turned to the opposite diretion
+		if (archDistance < 0)
 			centerDistance = -centerDistance;
 
 		// finding the argument of the displacement vector.
