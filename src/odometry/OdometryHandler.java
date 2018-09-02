@@ -64,11 +64,7 @@ public class OdometryHandler {
 		 * calculating the yaw difference using geometry laws. Signified by Δϕ
 		 * in the article. (equation 22)
 		 */
-		double yawDifference = yawDiff
-				.get();/*
-						 * ((leftDistance - rightDistance) /
-						 * odometryUnit.getRobotWidth())
-						 */
+		double yawDifference = yawDiff.get();
 
 		/*
 		 * calculating the length of the arch the middle of the robot has
