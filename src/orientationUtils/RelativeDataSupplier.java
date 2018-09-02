@@ -2,7 +2,6 @@ package orientationUtils;
 
 import java.util.function.Supplier;
 
-
 /**
  * This class represents an object with a changing value. </br>
  * The object may be a sensor measuring changing values, time-steps, or any
