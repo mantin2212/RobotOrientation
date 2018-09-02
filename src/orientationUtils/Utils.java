@@ -1,9 +1,5 @@
 package orientationUtils;
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
-
 import utils.Point;
 
 /**
@@ -14,66 +10,15 @@ import utils.Point;
 public class Utils {
 
 	/**
-	 * This method returns the unit matrix (also called "Identity Matrix"). </br>
-	 * To learn more about the unit matrix, see
-	 * <a href="https://en.wikipedia.org/wiki/Identity_matrix">The Unit Matrix</a>
-	 * 
-	 * @param size
-	 *            - the size (number of rows and columns) of the unit matrix
-	 * @return - a unit matrix in the wanted size
-	 */
-	public static RealMatrix getUnitMatrix(int size) {
-		RealMatrix result = new Array2DRowRealMatrix(size, size);
-
-		for (int i = 0; i < result.getRowDimension(); i++)
-			result.setEntry(i, i, 1);
-
-		return result;
-	}
-
-	/**
-	 * returns the zero square matrix with a given size.
-	 * 
-	 * @param size
-	 *            the size of the wanted zero matrix.
-	 * @return the zero matrix with the given size.
-	 */
-	//TODO - change name
-	public static RealMatrix get0Matrix(int size) {
-		return new Array2DRowRealMatrix(size, size);
-	}
-
-	public static RealMatrix getDiagonalMatrix(RealVector values) {
-		RealMatrix result = new Array2DRowRealMatrix(values.getDimension(), values.getDimension());
-
-		for (int i = 0; i < result.getColumnDimension(); i++) {
-			result.setEntry(i, i, values.getEntry(i));
-		}
-
-		return result;
-	}
-
-	/**
-	 * multiplies a given vector by itself, element by element
-	 * 
-	 * @param vector
-	 *            the vector which should be squared
-	 * @return a vector, containing the squares of the elements in the given vector
-	 */
-	public static RealVector getSquared(RealVector vector) {
-		return vector.ebeMultiply(vector);
-	}
-
-	/**
-	 * This method receives a vector presented in the polar form (norm and argument)
-	 * and return the cartesian form of this vector (the X component and the Y
-	 * component)
+	 * This method receives a vector presented in the polar form (norm and
+	 * argument) and return the cartesian form of this vector (the X component
+	 * and the Y component)
 	 * 
 	 * @param norm
 	 *            the vector's length
 	 * @param argument
-	 *            the argument of the vector (the argument between the vector and
-	 *            the X axis).
+	 *            the argument of the vector (the argument between the vector
+	 *            and the X axis).
 	 * @return a point representing the the vector by its X and Y component (the
 	 *         cartesian form of the vector) in that order: (X,Y)
 	 */
@@ -106,8 +51,8 @@ public class Utils {
 	}
 
 	/**
-	 * uses the cosine law to return the third side of a triangle, knowing the two
-	 * other sides and the angle between them
+	 * uses the cosine law to return the third side of a triangle, knowing the
+	 * two other sides and the angle between them
 	 * 
 	 * @param side1
 	 *            one side of a triangle
