@@ -1,6 +1,6 @@
-package odometry;
+package org.usfirst.frc.team2212.odometry;
 
-import java.awt.geom.Point2D;;
+import java.awt.geom.Point2D;
 
 /**
  * a class which uses encoders to find the progress of a robot between discrete
@@ -12,19 +12,12 @@ import java.awt.geom.Point2D;;
 public class OdometryHandler {
 
 	private OdometryUnit odometryUnit;
-
 	private RelativeDataSupplier yawDiff;
 
 	/**
 	 * creates a new {@link OdometryHandler} object, with given parameters
 	 * 
-	 * @param leftEncoderSupplier
-	 *            the value supplier from the left encoder
-	 * @param rightEncoderSupplier
-	 *            the value supplier from the right encoder
-	 * @param robotWidth
-	 *            the width of the relevant robot
-	 */
+	 * */
 	public OdometryHandler(OdometryUnit odometryUnit) {
 		this.odometryUnit = odometryUnit;
 
@@ -64,7 +57,6 @@ public class OdometryHandler {
 		 * The yaw difference .Signified by Δϕ in the article. (equation 22)
 		 */
 		double yawDifference = yawDiff.get();
-
 		/*
 		 * calculating the length of the arch the middle of the robot has
 		 * passed. Signified in the article as ak (equation 21)
@@ -73,7 +65,7 @@ public class OdometryHandler {
 
 		if (yawDifference == 0) {
 			// the robot moved in a straight line
-			centerDistance = rightDistance;
+			centerDistance = Math.abs(rightDistance);
 		} else {
 			/*
 			 * calculating the rotation radius of the robot's movement.
@@ -87,12 +79,13 @@ public class OdometryHandler {
 			centerDistance = MathUtils.cosineLaw(rotationRadius, rotationRadius, yawDifference);
 		}
 
-		// if turned to the opposite diretion
-		if (archDistance < 0)
-			centerDistance = -centerDistance;
-
 		// finding the argument of the displacement vector.
-		double arg = yaw - 1 / 2 * yawDifference;
+		double arg = yaw - 1 / 2.0 * yawDifference;
+
+		// if turned to the opposite diretion
+		if (archDistance < 0){
+			arg += Math.PI;
+		}
 		/*
 		 * Building the cartesian displacement vector by an argument (arg) and a
 		 * norm (Δλ).
@@ -103,6 +96,6 @@ public class OdometryHandler {
 		 * so gives us the robot's position in the navigation system (equation
 		 * 26)
 		 */
-		return MathUtils.convertPolarToCartesian(centerDistance, arg);
+		return MathUtils.convertPolarToCartesian(centerDistance, -arg);
 	}
 }
